@@ -1,5 +1,5 @@
 import React from "react";
-import Diagramm from "./components/Diagtamm";
+import Diagram from "./components/Diagram";
 import Incomes from "./components/Incomes";
 import Info from "./components/Info";
 import Sales from "./components/Sales";
@@ -8,9 +8,9 @@ import ListOfItems from "./components/ListOfItems";
 function App() {
   return (
     <div style={{ width: 800, height: 500 }}>
-      <ListOfItems />
+      {/* <ListOfItems /> */}
       {/* <Sales /> */}
-      {/* <Diagramm /> */}
+      <Diagram />
       {/* <Sales /> */}
     </div>
   );

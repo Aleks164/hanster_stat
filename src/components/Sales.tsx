@@ -26,7 +26,7 @@ const Sales = () => {
     link.dispatchEvent(evt);
     link.remove();
   };
-  async function parserHendler() {
+  async function parserHandler() {
     try {
       const responseJson = await fetch(
         "https://statistics-api.wildberries.ru/api/v1/supplier/sales?dateFrom=2023-05-22",
@@ -44,7 +44,7 @@ const Sales = () => {
       return console.log(error);
     }
   }
-  return <button onClick={parserHendler}>parse</button>;
+  return <button onClick={parserHandler}>parse</button>;
 };
 
 export default Sales;

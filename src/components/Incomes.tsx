@@ -4,7 +4,7 @@ import { useState } from "react";
 
 const Incomes = () => {
   const [data, setData] = useState([]);
-  async function parserHendler() {
+  async function parserHandler() {
     fetch(
       "https://statistics-api-sandbox.wildberries.ru/api/v1/supplier/incomes?dateFrom=2023-05-20",
       {
@@ -19,7 +19,7 @@ const Incomes = () => {
       .then((result) => console.log(result))
       .catch((error) => console.log(error));
   }
-  return <button onClick={parserHendler}>parse</button>;
+  return <button onClick={parserHandler}>parse</button>;
 };
 
 export default Incomes;
