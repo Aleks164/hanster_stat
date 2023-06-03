@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 import { SalesItem } from "@/api";
 import data from "@/data/sales.json";
 import { DatePicker, Table } from "antd";
+import ExcelImporter from "./ExcelImporter";
 
 const dateFormat = "DD/MM/YYYY";
 const columns = [{
@@ -54,7 +55,6 @@ function ListOfItems() {
   return (
     <div>
       <DatePicker
-        // defaultValue={dayjs("22/05/2023", dateFormat)}
         onChange={(date, string) => {
           setSelectedDate(string);
         }}
@@ -62,6 +62,7 @@ function ListOfItems() {
         format={dateFormat}
       />
       <div>Count:{itemsList.length}</div>
+      <ExcelImporter data={itemsList} />
       <Table dataSource={itemsList} columns={columns} />
     </div>
   );

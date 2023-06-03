@@ -8,7 +8,7 @@ import ListOfItems from "./components/ListOfItems";
 function App() {
   return (
     <div style={{ width: 800, height: 500 }}>
-      {/* <ListOfItems /> */}
+      <ListOfItems />
       {/* <Sales /> */}
       <Diagram />
       {/* <Sales /> */}
