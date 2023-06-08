@@ -1,7 +1,16 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent } from "react";
 import { SalesItem } from "@/api";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import data from "@/data/sales.json";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
+import data from "../../server/data/sales.json";
 
 export default class Example extends PureComponent {
   constructor(props: {} | Readonly<{}>) {
@@ -12,7 +21,7 @@ export default class Example extends PureComponent {
     const quantityByDate: Record<string, number> = {};
     (data as unknown as SalesItem[]).forEach((item) => {
       const itemDate = new Date(item.date!);
-      const month = itemDate.toLocaleString('default', { month: 'long' });
+      const month = itemDate.toLocaleString("default", { month: "long" });
       const date = itemDate.getDate();
       const keyTemplate = `${month} ${date}`;
 
@@ -22,17 +31,15 @@ export default class Example extends PureComponent {
       for (const date in quantityByDate) {
         salesByDate.push({
           name: date,
-          sale: quantityByDate[date]
-        })
+          sale: quantityByDate[date],
+        });
       }
       this.setState({ salesByDate });
-    })
+    });
   }
 
   render() {
     const { salesByDate } = this.state;
-    console.log(salesByDate);
-
     return (
       <ResponsiveContainer width="100%" height="100%">
         <LineChart
@@ -51,7 +58,13 @@ export default class Example extends PureComponent {
           <YAxis />
           <Tooltip />
           <Legend />
-          <Line type="monotone" dataKey="sale" name='Продажи' stroke="#8884d8" activeDot={{ r: 8 }} />
+          <Line
+            type="monotone"
+            dataKey="sale"
+            name="Продажи"
+            stroke="#8884d8"
+            activeDot={{ r: 8 }}
+          />
           {/* <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
           <Line type="monotone" dataKey="amt" stroke="#ff0042" /> */}
         </LineChart>
