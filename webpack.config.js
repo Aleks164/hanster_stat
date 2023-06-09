@@ -3,6 +3,8 @@ const { resolve } = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const Dotenv = require('dotenv-webpack');
+const webpack = require('webpack');
 
 const isDev = process.env.NODE_ENV === "development";
 
@@ -25,7 +27,7 @@ module.exports = {
   },
   output: {
     path: resolve(__dirname, "dist"),
-    publicPath:  "/",
+    publicPath: "/",
     clean: true,
   },
   module: {
@@ -57,7 +59,11 @@ module.exports = {
   optimization: {
     minimizer: ["...", new CssMinimizerPlugin()],
   },
-  plugins: [    
+  plugins: [
+    new Dotenv(),
+    new webpack.DefinePlugin({
+      STATISTICS_API: JSON.stringify(process.env.STATISTICS_API)
+    }),
     new HtmlWebpackPlugin({
       template: "./src/index.html",
     }),

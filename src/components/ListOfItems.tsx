@@ -51,12 +51,17 @@ function ListOfItems() {
   }, []);
 
   const onSelectDate = useCallback(async (date: Dayjs) => {
-    const selectedDate = date.format(dateFormat);
+    const newSelectedDate = date.format("YYYY-MM-DD");
+    console.log(newSelectedDate);
+
     const resp = await fetch(
-      "http://localhost:3000/test?date=" + encodeURIComponent(selectedDate)
+      "http://localhost:3000/sales?date=" + encodeURIComponent(newSelectedDate)
     );
-    setSelectedDate(selectedDate);
-    setItemsList(await resp.json());
+
+    setSelectedDate(date.format(dateFormat));
+    const items = await resp.json();
+
+    if (Array.isArray(items) && items.length) setItemsList(items);
   }, []);
 
   return (

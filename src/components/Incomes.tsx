@@ -1,4 +1,3 @@
-import { KEYS } from "@/helpers/consts";
 import React from "react";
 import { useState } from "react";
 
@@ -10,7 +9,7 @@ const Incomes = () => {
       {
         method: "GET",
         headers: {
-          Authorization: KEYS.STATISTICS_API,
+          Authorization: process.env.STATISTICS_API as string,
           "Content-Type": "application/json",
         },
       }

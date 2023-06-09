@@ -1,11 +1,10 @@
 import { SalesItem } from "@/api";
-import { KEYS } from "@/helpers/consts";
 import React from "react";
 import { useState } from "react";
 
 const Sales = () => {
   const [data, setData] = useState([]);
-  const saveTemplateAsFile = (filename, dataObjToWrite) => {
+  const saveTemplateAsFile = (filename: string, dataObjToWrite: any[]) => {
     const blob = new Blob([JSON.stringify(dataObjToWrite)], {
       type: "text/json",
     });
@@ -29,13 +28,15 @@ const Sales = () => {
   async function parserHandler() {
     try {
       const responseJson = await fetch(
-        "https://statistics-api.wildberries.ru/api/v1/supplier/sales?dateFrom=2023-05-22",
+        "https://statistics-api.wildberries.ru/api/v1/supplier/sales?dateFrom=2023-06-01",
         {
           method: "GET",
           headers: {
-            Authorization: KEYS.STATISTICS_API,
-            "Content-Type": "application/json",
+            Authorization: process.env.STATISTICS_API as string,
+            // "Content-Type": "application/json",
           },
+
+          // mode: "no-cors",
         }
       );
       const result_1 = (await responseJson.json()) as SalesItem[];

@@ -12,10 +12,17 @@ import {
 } from "recharts";
 import data from "../../server/data/sales.json";
 
-export default class Example extends PureComponent {
+type DiagramStateType = {
+  salesByDate: {
+    name: string;
+    sale: number;
+  }[];
+};
+
+export default class Diagram extends PureComponent {
   constructor(props: {} | Readonly<{}>) {
     super(props);
-    this.state = { salesByDate: [] };
+    this.state = { salesByDate: [] } as DiagramStateType;
   }
   componentDidMount(): void {
     const quantityByDate: Record<string, number> = {};
@@ -39,7 +46,7 @@ export default class Example extends PureComponent {
   }
 
   render() {
-    const { salesByDate } = this.state;
+    const { salesByDate } = this.state as DiagramStateType;
     return (
       <ResponsiveContainer width="100%" height="100%">
         <LineChart
