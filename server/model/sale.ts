@@ -1,8 +1,7 @@
 import mongoose from "mongoose";
-import { SalesItem } from "../../src/api";
+import { SalesItem } from "../../commonTypes/api";
 
-const saleSchema = new mongoose.Schema<SalesItem>({
-}, { strict: false });
+const saleSchema = new mongoose.Schema<SalesItem>({}, { strict: false });
 
 const Sale = mongoose.model("Sale", saleSchema);
 

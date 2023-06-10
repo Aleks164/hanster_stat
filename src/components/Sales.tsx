@@ -1,4 +1,4 @@
-import { SalesItem } from "@/api";
+import { SalesItem } from "../../commonTypes/api";
 import React from "react";
 import { useState } from "react";
 
@@ -33,10 +33,7 @@ const Sales = () => {
           method: "GET",
           headers: {
             Authorization: process.env.STATISTICS_API as string,
-            // "Content-Type": "application/json",
           },
-
-          // mode: "no-cors",
         }
       );
       const result_1 = (await responseJson.json()) as SalesItem[];

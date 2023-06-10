@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { SalesItem } from "@/api";
+import { SalesItem } from "../../commonTypes/api";
 import {
   LineChart,
   Line,

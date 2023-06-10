@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
-import { SalesItem } from "@/api";
+import { SalesItem } from "../../commonTypes/api";
 import { Alert, Calendar, Col, Row, Table } from "antd";
 import ExcelImporter from "./ExcelImporter";
 import { ColumnType, ColumnsType } from "antd/es/table";
@@ -94,6 +94,7 @@ function ListOfItems() {
             }
           />
           <Table
+            showSorterTooltip={false}
             style={{ minWidth: "710px" }}
             dataSource={itemsList}
             rowKey={(record) => record.saleID!}
