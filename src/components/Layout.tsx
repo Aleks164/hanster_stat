@@ -4,22 +4,22 @@ import {
   MailOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import type { MenuProps } from "antd";
 import { Menu } from "antd";
 import hanster from "@/assets/hanster.jpg";
 
 const items: MenuProps["items"] = [
   {
-    label: "Navigation One",
+    label: <Link to="/">Статистика</Link>,
     key: "mail",
     icon: <MailOutlined />,
   },
   {
-    label: "Navigation Two",
+    label: <Link to="diagrams/">Графики</Link>,
     key: "app",
     icon: <AppstoreOutlined />,
-    disabled: true,
+    // disabled: true,
   },
   {
     label: "Navigation Three - Submenu",

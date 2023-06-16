@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
 import { SalesItem } from "../../commonTypes/api";
-import { Alert, Calendar, Col, Row, Table } from "antd";
+import { Alert, Button, Calendar, Col, Row, Table, message } from "antd";
 import ExcelImporter from "./ExcelImporter";
 import { ColumnType, ColumnsType } from "antd/es/table";
 
@@ -44,28 +44,40 @@ const columns = [
 
 function ListOfItems() {
   const [itemsList, setItemsList] = useState<SalesItem[]>([]);
-  const [selectedDate, setSelectedDate] = useState("22.05.2023");
+  const [selectedDate, setSelectedDate] = useState(dayjs().format(dateFormat));
+  const [messageApi, contextHolder] = message.useMessage();
+
+  const error = (message: string) => {
+    messageApi.open({
+      type: "error",
+      content: message,
+    });
+  };
+
+  const onSelectDate = useCallback(async (date: Dayjs) => {
+    const newSelectedDate = date.format("YYYY-MM-DD");
+    try {
+      const resp = await fetch(
+        "http://localhost:3000/sales?date=" +
+          encodeURIComponent(newSelectedDate)
+      );
+
+      setSelectedDate(date.format(dateFormat));
+      const items = await resp.json();
+
+      if (Array.isArray(items) && items.length) setItemsList(items);
+    } catch (e) {
+      error((e as Error).message);
+    }
+  }, []);
 
   useEffect(() => {
     onSelectDate(dayjs());
   }, []);
 
-  const onSelectDate = useCallback(async (date: Dayjs) => {
-    const newSelectedDate = date.format("YYYY-MM-DD");
-    console.log(newSelectedDate);
-
-    const resp = await fetch(
-      "http://localhost:3000/sales?date=" + encodeURIComponent(newSelectedDate)
-    );
-
-    setSelectedDate(date.format(dateFormat));
-    const items = await resp.json();
-
-    if (Array.isArray(items) && items.length) setItemsList(items);
-  }, []);
-
   return (
     <>
+      {contextHolder}
       <Row gutter={16} style={{ minWidth: "1110px", margin: "10px 5px" }}></Row>
       <Row gutter={16} style={{ minWidth: "1110px", margin: "10px 0px" }}>
         <Col span={16} flex={2}>
@@ -76,7 +88,7 @@ function ListOfItems() {
                   textAlign: "right",
                   display: "flex",
                   flexWrap: "nowrap",
-                  justifyContent: "flex-end",
+                  justifyContent: "space-between",
                   alignItems: "center",
                 }}
               >
