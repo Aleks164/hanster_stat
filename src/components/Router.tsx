@@ -1,7 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import ListOfItems from "./ListOfItems";
-import Diagram from "./Diagram";
+import DiagramPage from "./Diagram";
 import Layout from "./Layout";
 
 function Router() {
@@ -9,7 +9,7 @@ function Router() {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<ListOfItems />} />
-        <Route path="diagrams" element={<Diagram />} />
+        <Route path="diagrams" element={<DiagramPage />} />
         <Route path="*" element={<ListOfItems />} />
       </Route>
     </Routes>
