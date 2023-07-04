@@ -1,7 +1,8 @@
+import { PipelineStage } from "mongoose";
 import { DatesMapType } from "../controller/salesByDateCount";
-import getSaleCountMatchLogic from "./getSeleCountMatchLogic";
+import getSaleCountMatchLogic from "./getSaleCountMatchLogic";
 
-export default function getSalesByDateCountAggregation(datesMap: DatesMapType) {
+export default function getSalesByDateCountAggregation(datesMap: DatesMapType): PipelineStage[] {
 
     return [
         {

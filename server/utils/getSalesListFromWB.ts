@@ -4,10 +4,10 @@ import "dotenv/config";
 
 async function getSalesListFromWB(dateFrom: string, flag = 0) {
   try {
-    const quveryDate = dateFrom.replace(".", "-");
-    const quveryFlag = flag ? "&flag=1" : "";
+    const queryDate = dateFrom.replace(".", "-");
+    const queryFlag = flag ? "&flag=1" : "";
     const responseJson = await fetch(
-      `https://statistics-api.wildberries.ru/api/v1/supplier/sales?dateFrom=${quveryDate + quveryFlag
+      `https://statistics-api.wildberries.ru/api/v1/supplier/sales?dateFrom=${queryDate + queryFlag
       }`,
       {
         method: "GET",
