@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { StocksItem } from "../../commonTypes/api";
 
-const saleSchema = new mongoose.Schema<StocksItem>({
+const supplierOrdersSchema = new mongoose.Schema<StocksItem>({
     lastChangeDate: Date,
     /**
      * Артикул продавца
@@ -101,6 +101,6 @@ const saleSchema = new mongoose.Schema<StocksItem>({
     discount: Number,
 });
 
-const SupplierStocks = mongoose.model("SupplierStocks", saleSchema);
+const SupplierStocks = mongoose.model("SupplierStocks", supplierOrdersSchema);
 
 export default SupplierStocks;

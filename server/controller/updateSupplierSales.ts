@@ -1,0 +1,18 @@
+import express from "express";
+import SupplierStocks from "../model/supplierStocks";
+import getSupplierSalesFromWB from "../utils/getSupplierSalesFromWB";
+
+const updateSupplierSales = express.Router();
+
+updateSupplierSales.get("/", async (req, res, next) => {
+
+    const salesListFromWB = await getSupplierSalesFromWB();
+    try {
+        const sale = await SupplierStocks.create(salesListFromWB);
+        res.status(200).json(sale);
+    } catch (e) {
+        res.status(400).json("Bad request");
+    }
+});
+
+export default updateSupplierSales;

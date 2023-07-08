@@ -1,5 +1,5 @@
 import express from "express";
-import Sale from "../model/sale";
+import SupplierSales from "../model/supplierSales";
 import getSalesByDateCountAggregation from "../utils/getSalesByDateCountAggregation";
 
 export type DatesMapType = {
@@ -23,7 +23,7 @@ salesByDateCount.get("/", async (req, res, next) => {
     const dates: DatesMapType = { from_Y, from_M, from_D, to_Y, to_M, to_D, fromDate, toDate };
     try {
         if (!(from_Y && from_M && from_D && to_Y && to_M && to_D)) throw new Error("Wrong date");
-        const saleCount = await Sale.aggregate(getSalesByDateCountAggregation(dates)).exec();
+        const saleCount = await SupplierSales.aggregate(getSalesByDateCountAggregation(dates)).exec();
         res.status(200).json(saleCount);
     } catch (e) {
         res.status(400).json("Bad request");
