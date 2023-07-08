@@ -8,6 +8,7 @@ import { Link, Outlet } from "react-router-dom";
 import type { MenuProps } from "antd";
 import { Menu } from "antd";
 import hanster from "@/assets/hanster.jpg";
+import DataUpdate from "./DataUpdate";
 
 const items: MenuProps["items"] = [
   {
@@ -83,6 +84,7 @@ const Layout: React.FC = () => {
         mode="horizontal"
         items={items}
       />
+      <DataUpdate />
       <Outlet />
     </>
   );

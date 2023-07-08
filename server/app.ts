@@ -1,9 +1,9 @@
 import express from "express";
-import data from "./data/sales.json";
 import connectToDB from "./utils/connectToDB";
 import saleRouter from "./controller/sales";
 import cors from "cors";
 import salesByDateCount from "./controller/salesByDateCount";
+import updateSupplierStocks from "./controller/updateSupplierStocks";
 
 const app = express();
 const port = 3000;
@@ -11,6 +11,7 @@ const port = 3000;
 app.use(cors());
 app.use("/sales", saleRouter);
 app.use("/sales_by_date", salesByDateCount);
+app.use("/supplier_stocks", updateSupplierStocks);
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
