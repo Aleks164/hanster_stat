@@ -6,6 +6,7 @@ import salesByDateCount from "./controller/salesByDateCount";
 import updateSupplierStocks from "./controller/updateSupplierStocks";
 import updateSupplierOrders from "./controller/updateSupplierOrders";
 import updateSupplierSales from "./controller/updateSupplierSales";
+import updateSupplierReportDetailByPeriod from "./controller/updateSupplierReportDetailByPeriod";
 
 const app = express();
 const port = 3000;
@@ -16,6 +17,7 @@ app.use("/sales_by_date", salesByDateCount);
 app.use("/supplier_stocks", updateSupplierStocks);
 app.use("/supplier_orders", updateSupplierOrders);
 app.use("/supplier_sales", updateSupplierSales);
+app.use("/supplier_reportDetailByPeriod", updateSupplierReportDetailByPeriod);
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
