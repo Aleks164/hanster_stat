@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
-import { SalesItem } from "../../commonTypes/api";
 
-const saleSchema = new mongoose.Schema<SalesItem>({
+const saleSchema = new mongoose.Schema({
     /**
      * Номер заказа. Объединяет все позиции одного заказа.
      * @type {String}
@@ -169,13 +168,7 @@ const saleSchema = new mongoose.Schema<SalesItem>({
      * @type {String}
      * @memberof SalesItem
      */
-    sticker: String,
-    /**
-     * Уникальный идентификатор заказа, функционально аналогичный `odid`/`rid`.  Данный параметр введен в июле'22 и в течение переходного периода может быть заполнен не во всех ответах. Примечание для работающих по системе Маркетплейс: `srid` равен `rid` в ответе на метод `GET /api/v2/orders`. 
-     * @type {String}
-     * @memberof SalesItem
-     */
-    srid: String,
+    sticker: String
 });
 
 const SupplierSales = mongoose.model("SupplierSales", saleSchema);

@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { StocksItem } from "../../commonTypes/api";
 
-const supplierOrdersSchema = new mongoose.Schema<StocksItem>({
+const supplierOrdersSchema = new mongoose.Schema({
     lastChangeDate: Date,
     /**
      * Артикул продавца
@@ -99,6 +99,10 @@ const supplierOrdersSchema = new mongoose.Schema<StocksItem>({
      * @memberof StocksItem
      */
     discount: Number,
+    inWayFromClient: Number,
+    Price: Number,
+    Discount: Number,
+    SCCode: String,
 });
 
 const SupplierStocks = mongoose.model("SupplierStocks", supplierOrdersSchema);

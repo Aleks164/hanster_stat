@@ -12,8 +12,8 @@ const app = express();
 const port = 3000;
 
 app.use(cors());
-app.use("/sales", getSalesByDate);
-app.use("/sales_by_date", salesByDateCount);
+// app.use("/sales", getSalesByDate);
+// app.use("/sales_by_date", salesByDateCount);
 app.use("/supplier_stocks", updateSupplierStocks);
 app.use("/supplier_orders", updateSupplierOrders);
 app.use("/supplier_sales", updateSupplierSales);

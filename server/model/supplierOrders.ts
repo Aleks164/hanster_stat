@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { OrdersItem } from "../../commonTypes/api";
 
-const supplierOrdersSchema = new mongoose.Schema<OrdersItem>({
+const supplierOrdersSchema = new mongoose.Schema({
     /**
      * Номер заказа. Объединяет все позиции одного заказа.
      * @type {String}
@@ -105,23 +105,13 @@ const supplierOrdersSchema = new mongoose.Schema<OrdersItem>({
      */
     isCancel: Boolean,
     /**
-     * Дата и время отмены заказа. Если заказ не был отменен, то `\"0001-01-01T00:00:00\"`. Если часовой пояс не указан, то берется Московское время UTC+3.
-     * @type {Date}
-     * @memberof OrdersItem
-     */
-    cancelDt: Date,
-    /**
      * Цифровое значение стикера, который клеится на товар в процессе сборки заказа по системе Маркетплейс.
      * @type {String}
      * @memberof OrdersItem
      */
     sticker: String,
-    /**
-     * Уникальный идентификатор заказа, функционально аналогичный `odid`/`rid`.  Данный параметр введен в июле'22 и в течение переходного периода может быть заполнен не во всех ответах. Примечание для работающих по системе Маркетплейс: `srid` равен `rid` в ответе на метод `GET /api/v2/orders`. 
-     * @type {String}
-     * @memberof OrdersItem
-     */
-    srid: String,
+    "cancel_dt": Date,
+    "orderType": String
 });
 
 const SupplierOrders = mongoose.model("supplierOrders", supplierOrdersSchema);

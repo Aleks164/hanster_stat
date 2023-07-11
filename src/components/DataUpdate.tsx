@@ -4,7 +4,7 @@ import { useState } from "react";
 const DataUpdate = () => {
   const [data, setData] = useState([]);
   async function parserHandler() {
-    fetch("http://localhost:3000/supplier_stocks", {
+    fetch("http://localhost:3000/supplier_sales", {
       method: "GET",
     })
       .then((responseJson) => responseJson.json())
