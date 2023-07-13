@@ -1,12 +1,14 @@
 import fetch from "node-fetch";
-import { SalesItem } from "../../commonTypes/api";
+import { SalesItem } from "../../../commonTypes/api";
 import "dotenv/config";
 
-async function getSupplierOrdersFromWB() {
-
+async function getSalesListFromWB(dateFrom: string, flag = 0) {
   try {
+    const queryDate = dateFrom.replace(".", "-");
+    const queryFlag = flag ? "&flag=1" : "";
     const responseJson = await fetch(
-      `https://statistics-api.wildberries.ru/api/v1/supplier/orders?dateFrom=2022-01-01`,
+      `https://statistics-api.wildberries.ru/api/v1/supplier/sales?dateFrom=${queryDate + queryFlag
+      }`,
       {
         method: "GET",
         headers: {
@@ -22,4 +24,4 @@ async function getSupplierOrdersFromWB() {
   }
 }
 
-export default getSupplierOrdersFromWB;
+export default getSalesListFromWB;

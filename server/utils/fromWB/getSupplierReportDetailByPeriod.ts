@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
-import { DetailReportItem } from "../../commonTypes/api";
 import "dotenv/config";
+import { DetailReportItem } from "../../../commonTypes/api";
 
 async function getSupplierReportDetailByPeriod() {
 
