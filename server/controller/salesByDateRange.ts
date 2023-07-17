@@ -1,6 +1,6 @@
 import express from "express";
 import SupplierSales from "../model/supplierSales";
-import getSalesByDateRange from "../utils/getSalesByDateRange";
+import getSalesByDateRange from "../utils/fromMongoDB/getSalesByDateRange";
 
 export type DatesMapType = {
     from_Y: string;
@@ -13,9 +13,9 @@ export type DatesMapType = {
     toDate: string;
 }
 
-const salesByDateCount = express.Router();
+const salesByDateRange = express.Router();
 
-salesByDateCount.get("/", async (req, res, next) => {
+salesByDateRange.get("/", async (req, res, next) => {
     const fromDate = req.query["from"] as string;
     const toDate = req.query["to"] as string;
     try {
@@ -27,4 +27,4 @@ salesByDateCount.get("/", async (req, res, next) => {
     }
 });
 
-export default salesByDateCount;
+export default salesByDateRange;

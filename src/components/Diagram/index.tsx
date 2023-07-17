@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Col, Row } from "antd";
 import Diagram from "./Diagram";
-import DatePiker from "./DatePiker";
+import DatePiker from "../DatePicker/DatePiker";
 
 export type SalesCountByDateType = {
   name: string;

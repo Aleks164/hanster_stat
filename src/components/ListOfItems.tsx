@@ -4,8 +4,9 @@ import { SalesItem } from "../../commonTypes/api";
 import { Alert, Button, Calendar, Col, Row, Table, message } from "antd";
 import ExcelImporter from "./ExcelImporter";
 import { ColumnType, ColumnsType } from "antd/es/table";
+import DatePiker from "./DatePicker/DatePiker";
+import { dateFormat } from "@/constants";
 
-const dateFormat = "DD.MM.YYYY";
 const columns = [
   {
     title: "Размер товара",
@@ -56,6 +57,8 @@ function ListOfItems() {
 
   const onSelectDate = useCallback(async (date: Dayjs) => {
     const newSelectedDate = date.format("YYYY-MM-DD");
+    console.log(newSelectedDate);
+    return;
     try {
       const resp = await fetch(
         "http://localhost:3000/sales?date=" +
@@ -78,7 +81,9 @@ function ListOfItems() {
   return (
     <>
       {contextHolder}
-      <Row gutter={16} style={{ minWidth: "1110px", margin: "10px 5px" }}></Row>
+      <Row gutter={16} style={{ minWidth: "1110px", margin: "10px 5px" }}>
+        <DatePiker setSalesCountByDate={setSalesCountByDate} />
+      </Row>
       <Row gutter={16} style={{ minWidth: "1110px", margin: "10px 0px" }}>
         <Col span={16} flex={2}>
           <Alert
@@ -111,13 +116,6 @@ function ListOfItems() {
             dataSource={itemsList}
             rowKey={(record) => record.saleID!}
             columns={columns as ColumnsType<SalesItem>}
-          />
-        </Col>
-        <Col span={8} flex={1}>
-          <Calendar
-            fullscreen={false}
-            value={selectedDate ? dayjs(selectedDate, dateFormat) : undefined}
-            onSelect={onSelectDate}
           />
         </Col>
       </Row>

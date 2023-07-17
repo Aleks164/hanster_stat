@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
-import { SalesItem } from "../../commonTypes/api";
 import "dotenv/config";
+import { SalesItem } from "../../../commonTypes/api";
 
 async function getSupplierSalesFromWB() {
 

@@ -84,7 +84,6 @@ const Layout: React.FC = () => {
         mode="horizontal"
         items={items}
       />
-      <DataUpdate />
       <Outlet />
     </>
   );
