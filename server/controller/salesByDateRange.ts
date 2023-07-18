@@ -16,8 +16,8 @@ export type DatesMapType = {
 const salesByDateRange = express.Router();
 
 salesByDateRange.get("/", async (req, res, next) => {
-    const fromDate = req.query["from"] as string;
-    const toDate = req.query["to"] as string;
+    const fromDate = req.query["fromDate"] as string;
+    const toDate = req.query["toDate"] as string;
     try {
         if (!(fromDate && toDate)) throw new Error("Wrong date");
         const saleCount = await SupplierSales.aggregate(getSalesByDateRange(fromDate, toDate)).exec();

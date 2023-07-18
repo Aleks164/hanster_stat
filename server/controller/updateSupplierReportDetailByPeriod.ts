@@ -1,6 +1,6 @@
 import express from "express";
 import SupplierReportDetailByPeriod from "../model/supplierReportDetailByPeriod";
-import getSupplierReportDetailByPeriod from "../utils/getSupplierReportDetailByPeriod";
+import getSupplierReportDetailByPeriod from "../utils/fromWB/getSupplierReportDetailByPeriod";
 
 const updateSupplierReportDetailByPeriod = express.Router();
 

@@ -1,4 +1,4 @@
-import { dateFormat, calendarTypes } from "@/constants";
+import { dateFormat } from "@/constants";
 import { CalendarType } from "@/types";
 import dayjs from "dayjs";
 
@@ -6,14 +6,29 @@ function getCurrentDateByCalendarType(currentCalendarType: CalendarType, date: d
     let currentDateByCalendarType: dayjs.Dayjs | [dayjs.Dayjs, dayjs.Dayjs];
     let onChangeArguments: [string, string];
     switch (currentCalendarType) {
-        case "date":
-        case "month":
-        case "week": {
+        case "date": {
             if (Array.isArray(date)) currentDateByCalendarType = date[0];
             else currentDateByCalendarType = date;
             onChangeArguments = [currentDateByCalendarType.format(dateFormat),
-            currentDateByCalendarType.format(dateFormat)]
-                ;
+            currentDateByCalendarType.format(dateFormat)];
+            break;
+        }
+        case "month": {
+            if (Array.isArray(date)) currentDateByCalendarType = date[0];
+            else currentDateByCalendarType = date;
+            const month = currentDateByCalendarType.month();
+            const year = currentDateByCalendarType.year();
+            const firstDayOfMonth = new Date(year, month, 1);
+            const lastDayOfMonth = new Date(year, month + 1, 0);
+            onChangeArguments = [dayjs(firstDayOfMonth).format(dateFormat),
+            dayjs(lastDayOfMonth).format(dateFormat)];
+            break;
+        }
+        case "week": {
+            if (Array.isArray(date)) currentDateByCalendarType = date[0];
+            else currentDateByCalendarType = date;
+            onChangeArguments = [currentDateByCalendarType.weekday(1).format(dateFormat),
+            currentDateByCalendarType.weekday(7).format(dateFormat)];
             break;
         }
         case "range": {
