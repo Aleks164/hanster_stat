@@ -11,6 +11,7 @@ async function onSetData<T>(
         toDate: any;
     }) => Promise<Response>
 ) {
+    console.log(1)
     try {
         const newData = await requestDataHandler(pathName, queryParams);
         const parsedData = (await newData.json()) as T;

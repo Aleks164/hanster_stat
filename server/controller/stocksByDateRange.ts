@@ -1,6 +1,6 @@
 import express from "express";
 import SupplierSales from "../model/supplierSales";
-import getSaleDataByDateRange from "../utils/fromMongoDB/getSaleDataByDateRange";
+import getStockDataByDateRange from "../utils/fromMongoDB/getStockDataByDateRange";
 
 export type DatesMapType = {
     from_Y: string;
@@ -13,18 +13,18 @@ export type DatesMapType = {
     toDate: string;
 }
 
-const salesByDateRange = express.Router();
+const stocksByDateRange = express.Router();
 
-salesByDateRange.get("/", async (req, res, next) => {
+stocksByDateRange.get("/", async (req, res, next) => {
     const fromDate = req.query["fromDate"] as string;
     const toDate = req.query["toDate"] as string;
     try {
         if (!(fromDate && toDate)) throw new Error("Wrong date");
-        const saleCount = await SupplierSales.aggregate(getSaleDataByDateRange(fromDate, toDate)).exec();
+        const saleCount = await SupplierSales.aggregate(getStockDataByDateRange(fromDate, toDate)).exec();
         res.status(200).json(saleCount);
     } catch (e) {
         res.status(400).json("Bad request");
     }
 });
 
-export default salesByDateRange;
+export default stocksByDateRange;

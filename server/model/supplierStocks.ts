@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { StocksItem } from "../../commonTypes/api";
 
 const supplierOrdersSchema = new mongoose.Schema({
     lastChangeDate: Date,

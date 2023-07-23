@@ -1,20 +1,15 @@
 import { PipelineStage } from "mongoose";
+import { getNextDayDate } from "../getNextDayDate";
 
-export default function getSalesByDateRange(fromDate: string, toDate: string): PipelineStage[] {
-    console.log(fromDate, toDate)
-    const match = fromDate === toDate ? {
-        'date': {
-            '$eq': new Date(fromDate)
-        }
-    } : {
-        'date': {
-            '$gte': new Date(fromDate),
-            '$lte': new Date(toDate)
-        }
-    }
+export default function getSaleDataByDateRange(fromDate: string, toDate: string): PipelineStage[] {
     return [
         {
-            '$match': match
+            '$match': {
+                'date': {
+                    '$gte': new Date(fromDate),
+                    '$lte': fromDate === toDate ? getNextDayDate(toDate) : new Date(toDate)
+                }
+            }
         }, {
             '$project': {
                 'gNumber': 1,

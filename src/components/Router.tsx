@@ -1,17 +1,15 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import ListOfItems from "./ListOfItems";
-import DiagramPage from "./Diagram";
 import Layout from "./Layout";
-import SalesTable from "./Pages/SalesTable/Index";
+import TabTables from "./Pages/TabTables";
 
 function Router() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
-        <Route index element={<SalesTable />} />
+        <Route index element={<TabTables />} />
         {/* <Route path="diagrams" element={<DiagramPage />} /> */}
-        <Route path="*" element={<SalesTable />} />
+        <Route path="*" element={<TabTables />} />
       </Route>
     </Routes>
   );

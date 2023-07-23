@@ -14,7 +14,7 @@ dayjs.extend(weekday);
 
 const { RangePicker } = DatePicker;
 
-function DatePiker({ onSetData = () => {} }: DatePikerParamsType) {
+function DatePiker({ onSetData = () => {}, currentTab }: DatePikerParamsType) {
   const [date, setDate] = useState<DateTypeByCalendarType<CalendarType> | null>(
     null
   );
@@ -65,7 +65,7 @@ function DatePiker({ onSetData = () => {} }: DatePikerParamsType) {
       getCurrentDateByCalendarType(currentCalendarType, date);
     onSetData(...onChangeArguments);
     setDate(currentDateByCalendarType);
-  }, [currentCalendarType]);
+  }, [currentCalendarType, currentTab]);
   return (
     <Space direction="vertical" size="middle" style={{ display: "flex" }}>
       <Row>
