@@ -11,7 +11,13 @@ function DataTable({ itemsList, columns }) {
           showSorterTooltip={false}
           style={{ minWidth: "710px" }}
           dataSource={itemsList}
-          rowKey={(record) => record.id!}
+          onRow={(data, index) => {
+            console.log(data, index);
+          }}
+          rowKey={(record) => {
+            console.log(record._id);
+            return record._id!;
+          }}
           columns={columns as ColumnsType<SalesItem>}
         />
       </Row>

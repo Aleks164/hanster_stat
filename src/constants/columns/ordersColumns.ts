@@ -14,7 +14,6 @@ const ordersColumns = [{
     title: "Номер заказа",
     dataIndex: "gNumber",
     key: "gNumber",
-    defaultSortOrder: "descend",
     sorter: (a, b) => {
         return ("" + a.gNumber).localeCompare(b.gNumber);
     },
@@ -23,7 +22,6 @@ const ordersColumns = [{
     title: "Дата и время заказа",
     dataIndex: "date",
     key: "date",
-    defaultSortOrder: "descend",
     sorter: (a, b) => {
         return new Date(a.date) > new Date(b.date);
     },

@@ -1,5 +1,7 @@
 const HOST_NAME = 'http://localhost:3000';
-export enum PATH_NAMES { SALES = 'sales', ORDERS = 'orders', STOCKS = 'stocks' }
+export enum PATH_NAMES {
+    SALES = 'sales', ORDERS = 'orders', STOCKS = 'stocks', REPORT_DETAILS = 'reports'
+}
 
 function getDataByDateRange(pathName: PATH_NAMES, queryParams: { fromDate: any; toDate: any; }) {
     const { fromDate, toDate } = queryParams;

@@ -7,6 +7,7 @@
     "build": "webpack build --node-env production",
     "dev": "concurrently \"nodemon -q server/app.ts\" \"webpack serve --open --node-env development\"",
     "fsdev": "webpack serve --open --node-env development",
+    "server": "nodemon -q server/app.ts",
     "lint": "prettier --check . && eslint . --ext .js,.tsx && tsc --noEmit && stylelint \"**/*.css\"",
     "lint:fix": "prettier --write . && eslint . --fix --ext .js,.tsx && stylelint \"**/*.css\" --fix",
     "tsc": "npx tsc --noEmit",

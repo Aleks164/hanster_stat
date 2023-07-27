@@ -24,10 +24,11 @@ export default function getStockDataByDateRange(fromDate: string, toDate: string
                 "brand": 1,
                 "price": 1,
                 "discount": 1,
+                "lastChangeDate": 1,
             }
         }, {
             '$sort': {
-                'date': 1
+                'lastChangeDate': 1
             }
         }
     ]

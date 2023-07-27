@@ -14,7 +14,6 @@ const saleColumns = [{
     title: "Номер заказа",
     dataIndex: "gNumber",
     key: "gNumber",
-    defaultSortOrder: "descend",
     sorter: (a, b) => {
         return ("" + a.gNumber).localeCompare(b.gNumber);
     },
@@ -23,7 +22,6 @@ const saleColumns = [{
     title: "Дата и время продажи",
     dataIndex: "date",
     key: "date",
-    defaultSortOrder: "descend",
     sorter: (a, b) => {
         return new Date(a.date) > new Date(b.date);
     },
@@ -32,7 +30,6 @@ const saleColumns = [{
     title: "Согласованный итоговый дисконт",
     dataIndex: "discountPercent",
     key: "discountPercent",
-    defaultSortOrder: "descend",
     sorter: (a, b) => {
         return a.discountPercent - b.discountPercent;
     },

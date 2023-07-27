@@ -3,6 +3,8 @@ import { calendarTypes, datePickerDictionary, dateFormat } from "@/constants";
 import {
   PATH_NAMES,
 } from "@/requestDataHelpers/getDataByDateRange";
+import { ColumnType } from "antd/es/table";
+import { OrdersItem } from "../../../commonTypes/api";
 import dayjs from "dayjs";
 declare module "*.svg" {
   const content: any;
@@ -24,3 +26,5 @@ export type DateTypeByCalendarType<T> = T extends "range"
 export type DateStringTypeByCalendarType<T> = T extends "range"
   ? string
   : [string, string];
+
+export type ColumnsListType = ColumnType<Required<SalesItem>>[]

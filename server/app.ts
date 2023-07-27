@@ -8,6 +8,7 @@ import updateSupplierSales from "./controller/updateSupplierSales";
 import updateSupplierReportDetailByPeriod from "./controller/updateSupplierReportDetailByPeriod";
 import ordersByDateRange from "./controller/ordersByDateRange";
 import stocksByDateRange from "./controller/stocksByDateRange";
+import reportDetailsByDateRange from "./controller/reportDetailsByDateRange";
 
 const app = express();
 const port = 3000;
@@ -18,6 +19,7 @@ app.use(cors());
 app.use("/sales", salesByDateRange);
 app.use("/orders", ordersByDateRange);
 app.use("/stocks", stocksByDateRange);
+app.use("/reports", reportDetailsByDateRange);
 
 app.use("/supplier_stocks", updateSupplierStocks);
 app.use("/supplier_orders", updateSupplierOrders);

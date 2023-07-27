@@ -7,9 +7,10 @@ export const datePickerDictionary = {
     date: "День",
     range: "Диапазон",
 };
-export const pathNameDictionary = {
+export const pathNameDictionary: Record<PATH_NAMES, string> = {
     [PATH_NAMES.SALES]: 'Продажи',
     [PATH_NAMES.STOCKS]: "Склад",
+    [PATH_NAMES.REPORT_DETAILS]: "Отчет о продажах по реализации",
     [PATH_NAMES.ORDERS]: "Заказы"
 };
 export const dateFormat = "YYYY-MM-DD";
