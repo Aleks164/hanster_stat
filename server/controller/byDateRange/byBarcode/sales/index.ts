@@ -1,17 +1,6 @@
 import express from "express";
-import SupplierSales from "../model/supplierSales";
-import getSaleDataByDateRange from "../utils/fromMongoDB/getSaleDataByDateRange";
-
-export type DatesMapType = {
-    from_Y: string;
-    from_M: string;
-    from_D: string;
-    to_Y: string;
-    to_M: string;
-    to_D: string;
-    fromDate: string;
-    toDate: string;
-}
+import SupplierSales from "../../../../model/supplierSales";
+import getSaleDataByDateRange from "./getSales";
 
 const salesByDateRange = express.Router();
 

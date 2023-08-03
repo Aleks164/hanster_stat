@@ -1,7 +1,7 @@
 import { PipelineStage } from "mongoose";
-import { getNextDayDate } from "../getNextDayDate";
+import { getNextDayDate } from "../../../../utils/getNextDayDate";
 
-export default function getOrdersDataByDateRange(fromDate: string, toDate: string): PipelineStage[] {
+export default function getSaleDataByDateRange(fromDate: string, toDate: string): PipelineStage[] {
     return [
         {
             '$match': {
@@ -14,6 +14,11 @@ export default function getOrdersDataByDateRange(fromDate: string, toDate: strin
             '$project': {
                 'gNumber': 1,
                 'date': 1,
+                'discountPercent': 1,
+                'spp': 1,
+                'forPay': 1,
+                'finishedPrice': 1,
+                'priceWithDisc': 1,
                 'barcode': 1
             }
         }, {

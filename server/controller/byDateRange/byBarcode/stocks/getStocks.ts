@@ -1,5 +1,5 @@
 import { PipelineStage } from "mongoose";
-import { getNextDayDate } from "../getNextDayDate";
+import { getNextDayDate } from "../../../../utils/getNextDayDate";
 
 export default function getStockDataByDateRange(fromDate: string, toDate: string): PipelineStage[] {
     return [

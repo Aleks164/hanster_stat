@@ -54,7 +54,9 @@ const items = (Object.keys(tabItemsColumnsMap) as PATH_NAMES[]).map((key) =>
 
 function TabTables() {
   const [itemsList, setItemsList] = useState<SalesItem[]>([]);
-  const [currentTab, setCurrentTab] = useState<PATH_NAMES>(PATH_NAMES.SALES);
+  const [currentTab, setCurrentTab] = useState<PATH_NAMES>(
+    PATH_NAMES.REPORT_DETAILS
+  );
 
   const onSetDataHandler = useCallback(
     (fromDate: string, toDate: string) =>
