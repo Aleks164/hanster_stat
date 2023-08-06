@@ -12,18 +12,28 @@ async function onSetData<T>(
     }) => Promise<Response>
 ) {
     try {
-        const [responseReports, responseOrders] = await Promise.all([requestDataHandler(PATH_NAMES.REPORT_DETAILS, queryParams), requestDataHandler(PATH_NAMES.ORDERS, queryParams)])
+        const [responseReports, responseOrders, responseStocks] = await Promise.all([requestDataHandler(PATH_NAMES.REPORT_DETAILS, queryParams), requestDataHandler(PATH_NAMES.ORDERS, queryParams), requestDataHandler(PATH_NAMES.STOCKS, queryParams)])
         const reportDetails = await responseReports.json();
         const orders = await responseOrders.json();
-        if (!reportDetails || !orders) return;
+        const stocks = await responseStocks.json();
+        if (!reportDetails || !orders || !stocks) return;
         const mergeData = {};
         reportDetails.forEach(item => {
             const barcode = item._id;
             mergeData[barcode] = item;
         });
+        stocks.forEach(item => {
+            const barcode = item._id;
+            if (mergeData[barcode]) {
+                mergeData[barcode].daysOnSite = item.daysOnSite;
+                mergeData[barcode].quantityOnStock = item.quantityOnStock;
+            }
+            else
+                mergeData[barcode] = item;
+        });
         orders.forEach(item => {
             const barcode = item._id;
-            if (mergeData[barcode]) mergeData[barcode].count = item.count;
+            if (mergeData[barcode]) mergeData[barcode].ordersCount = item.ordersCount;
             else
                 mergeData[barcode] = item;
         });

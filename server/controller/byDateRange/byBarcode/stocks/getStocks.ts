@@ -11,24 +11,33 @@ export default function getStockDataByDateRange(fromDate: string, toDate: string
                 }
             }
         }, {
-            '$project': {
-                "barcode": 1,
-                "supplierArticle": 1,
-                "techSize": 1,
-                "quantity": 1,
-                "quantityFull": 1,
-                "nmId": 1,
-                "subject": 1,
-                "category": 1,
-                "daysOnSite": 1,
-                "brand": 1,
-                "price": 1,
-                "discount": 1,
-                "lastChangeDate": 1,
+            '$group': {
+                '_id': '$barcode',
+                'quantityOnStock': {
+                    '$push': '$quantity'
+                },
+                'retail_price': {
+                    '$push': '$price' //Цена розничная
+                },
+                'sale_percent': {
+                    '$push': '$discount' //Согласованная скидка
+                },
+                'subject_name': {
+                    '$first': '$subject' //Предмет
+                },
+                'daysOnSite': {
+                    '$first': '$daysOnSite' //Дней на сайте
+                },
+                'sa_name': {
+                    '$first': '$supplierArticle' //Артикул продавца
+                },
+                'ts_name': {
+                    '$first': '$techSize' //Размер
+                }
             }
         }, {
             '$sort': {
-                'lastChangeDate': 1
+                '_id': 1
             }
         }
     ]

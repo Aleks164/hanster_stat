@@ -39,44 +39,53 @@ const reportDetailColumns = [
         key: "retail_price",
         render: (value, record) => {
             console.log(value, record)
-            return value.join(", ")
+            return value && value.join(", ")
         },
-        // sorter: (a, b) => a.retail_price - b.retail_price,
     },
     {
         title: "Количество",
         dataIndex: "quantity",
         key: "quantity",
-        render: (value) => value.join(", "),
+        render: (value) => value && value.join(", "),
     },
     {
         title: "Согласованная скидка",
         dataIndex: "sale_percent",
         key: "sale_percent",
-        render: (value) => value.join(", "),
+        render: (value) => value && value.join(", "),
     },
     {
         title: "Цена розничная с учетом согласованной скидки",
         dataIndex: "retail_price_withdisc_rub",
         key: "retail_price_withdisc_rub",
-        render: (value) => value.join(", "),
+        render: (value) => value && value.join(", "),
     },
     {
         title: "Стоимость логистики",
         dataIndex: "delivery_rub",
         key: "delivery_rub",
-        render: (value) => value.join(", "),
+        render: (value) => value && value.join(", "),
     },
     {
         title: "К перечислению продавцу за реализованный товар",
         dataIndex: "ppvz_for_pay",
         key: "ppvz_for_pay",
-        render: (value) => value.join(", "),
+        render: (value) => value && value && value.join(", "),
     },
     {
-        title: "Заказы",
-        dataIndex: "count",
-        key: "count",
+        title: "Кол-во заказов",
+        dataIndex: "ordersCount",
+        key: "ordersCount",
+    },
+    {
+        title: "Дней на сайте",
+        dataIndex: "daysOnSite",
+        key: "daysOnSite",
+    },
+    {
+        title: "Кол-во на складе",
+        dataIndex: "quantityOnStock",
+        key: "quantityOnStock",
     }
 ] as ColumnType<Required<any>>[];
 

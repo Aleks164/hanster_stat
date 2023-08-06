@@ -13,7 +13,7 @@ export default function getOrdersDataByDateRange(fromDate: string, toDate: strin
         }, {
             '$group': {
                 '_id': '$barcode',
-                'count': {
+                'ordersCount': {
                     '$count': {}
                 }
             }

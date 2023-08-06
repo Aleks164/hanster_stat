@@ -19,7 +19,7 @@ app.use(cors());
 
 // app.use("/sales", salesByDateRange);
 app.use("/orders", ordersByDateRange);
-// app.use("/stocks", stocksByDateRange);
+app.use("/stocks", stocksByDateRange);
 app.use("/reports", reportDetailsByDateRange);
 
 app.use("/supplier_stocks", updateSupplierStocks);
