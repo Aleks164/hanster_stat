@@ -43,12 +43,6 @@ const reportDetailColumns = [
         },
     },
     {
-        title: "Количество",
-        dataIndex: "quantity",
-        key: "quantity",
-        render: (value) => value && value.join(", "),
-    },
-    {
         title: "Согласованная скидка",
         dataIndex: "sale_percent",
         key: "sale_percent",
@@ -73,19 +67,30 @@ const reportDetailColumns = [
         render: (value) => value && value && value.join(", "),
     },
     {
+        title: "Кол-во продаж",
+        dataIndex: "quantity",
+        key: "quantity",
+        render: (value) => value && value.join(", "),
+    },
+    {
         title: "Кол-во заказов",
         dataIndex: "ordersCount",
         key: "ordersCount",
+        render: (value) => value || 0,
+        sorter: (a, b) => a.ordersCount - b.ordersCount,
     },
     {
         title: "Дней на сайте",
         dataIndex: "daysOnSite",
         key: "daysOnSite",
+        render: (value) => value || 0,
+        sorter: (a, b) => a.daysOnSite - b.daysOnSite,
     },
     {
         title: "Кол-во на складе",
         dataIndex: "quantityOnStock",
         key: "quantityOnStock",
+        render: (value) => value && value.join(", ")
     }
 ] as ColumnType<Required<any>>[];
 

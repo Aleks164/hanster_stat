@@ -5,10 +5,17 @@ export default function getStockDataByDateRange(fromDate: string, toDate: string
     return [
         {
             '$match': {
-                'lastChangeDate': {
-                    '$gte': new Date(fromDate),
-                    '$lte': fromDate === toDate ? getNextDayDate(toDate) : new Date(toDate)
-                }
+                '$and': [
+                    {
+                        'lastChangeDate': {
+                            '$gte': new Date('Sun, 01 Jan 2023 00:00:00 GMT')
+                        }
+                    }, {
+                        'quantity': {
+                            '$gt': 0
+                        }
+                    }
+                ]
             }
         }, {
             '$group': {
@@ -17,27 +24,23 @@ export default function getStockDataByDateRange(fromDate: string, toDate: string
                     '$push': '$quantity'
                 },
                 'retail_price': {
-                    '$push': '$price' //Цена розничная
+                    '$push': '$Price'
                 },
                 'sale_percent': {
-                    '$push': '$discount' //Согласованная скидка
+                    '$push': '$Discount'
                 },
                 'subject_name': {
-                    '$first': '$subject' //Предмет
+                    '$first': '$subject'
                 },
                 'daysOnSite': {
-                    '$first': '$daysOnSite' //Дней на сайте
+                    '$first': '$daysOnSite'
                 },
                 'sa_name': {
-                    '$first': '$supplierArticle' //Артикул продавца
+                    '$first': '$supplierArticle'
                 },
                 'ts_name': {
-                    '$first': '$techSize' //Размер
+                    '$first': '$techSize'
                 }
-            }
-        }, {
-            '$sort': {
-                '_id': 1
             }
         }
     ]
