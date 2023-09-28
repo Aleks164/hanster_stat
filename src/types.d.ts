@@ -16,7 +16,6 @@ declare module '*.jpg';
 export type CalendarType = (typeof calendarTypes)[number];
 export type DatePikerParamsType = {
   onSetData?: (fromDate: string, toDate: string) => void,
-  currentTab: PATH_NAMES
 
 };
 

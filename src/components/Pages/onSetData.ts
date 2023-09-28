@@ -1,11 +1,41 @@
 import { PATH_NAMES } from "@/requestDataHelpers/getDataByDateRange";
 
-async function onSetData<T>(
-    pathName: PATH_NAMES,
+interface ReportDetailsType {
+    _id: string;
+    retail_price: number[];
+    sale_percent: number[];
+    retail_price_withdisc_rub: number[];
+    delivery_rub: number[];
+    ppvz_for_pay: number[];
+    subject_name: string;
+    sa_name: string;
+    ts_name: string;
+}
+
+interface StocksType {
+    _id: string;
+    quantityOnStock: number[];
+    retail_price: number[];
+    sale_percent: number[];
+    daysOnSite: number[]
+    subject_name: string;
+    sa_name: string;
+    ts_name: string;
+}
+
+interface OrdersType {
+    _id: string;
+    ordersCount: number;
+}
+
+export type TableStatRowInfoType = Partial<ReportDetailsType & StocksType & OrdersType>;
+export type TableStatRowsInfoByBarcodeMapType = Record<string, TableStatRowInfoType>
+
+async function onSetData(
     queryParams: {
         fromDate: string;
         toDate: string;
-    }, setData: React.Dispatch<React.SetStateAction<T>>,
+    }, setData: React.Dispatch<React.SetStateAction<TableStatRowInfoType[]>>,
     requestDataHandler: (pathName: PATH_NAMES, queryParams: {
         fromDate: any;
         toDate: any;
@@ -13,11 +43,11 @@ async function onSetData<T>(
 ) {
     try {
         const [responseReports, responseOrders, responseStocks] = await Promise.all([requestDataHandler(PATH_NAMES.REPORT_DETAILS, queryParams), requestDataHandler(PATH_NAMES.ORDERS, queryParams), requestDataHandler(PATH_NAMES.STOCKS, queryParams)])
-        const reportDetails = await responseReports.json();
-        const orders = await responseOrders.json();
-        const stocks = await responseStocks.json();
+        const reportDetails = await responseReports.json() as ReportDetailsType[];
+        const orders = await responseOrders.json() as OrdersType[];
+        const stocks = await responseStocks.json() as StocksType[];
         if (!reportDetails || !orders || !stocks) return;
-        const mergeData = {};
+        const mergeData = {} as TableStatRowsInfoByBarcodeMapType;
         reportDetails.forEach(item => {
             const barcode = item._id;
             mergeData[barcode] = item;
@@ -28,8 +58,6 @@ async function onSetData<T>(
                 mergeData[barcode].daysOnSite = item.daysOnSite;
                 mergeData[barcode].quantityOnStock = item.quantityOnStock;
             }
-            else
-                mergeData[barcode] = item;
         });
         orders.forEach(item => {
             const barcode = item._id;

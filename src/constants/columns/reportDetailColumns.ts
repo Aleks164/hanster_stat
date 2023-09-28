@@ -1,6 +1,9 @@
 import { ColumnType } from "antd/es/table";
 
-const reportDetailColumns = [
+
+export type ReportColumnType = typeof reportDetailColumns;
+
+export const reportDetailColumns = [
     {
         title: "Бар-код",
         dataIndex: "_id",
@@ -93,5 +96,3 @@ const reportDetailColumns = [
         render: (value) => value && value.join(", ")
     }
 ] as ColumnType<Required<any>>[];
-
-export default reportDetailColumns;
