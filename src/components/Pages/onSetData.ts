@@ -12,6 +12,8 @@ interface ReportDetailsType {
     ts_name: string;
 }
 
+type ReportDetailsKeysType = keyof ReportDetailsType;
+
 interface StocksType {
     _id: string;
     quantityOnStock: number[];
@@ -36,27 +38,37 @@ async function onSetData(
         fromDate: string;
         toDate: string;
     }, setData: React.Dispatch<React.SetStateAction<TableStatRowInfoType[]>>,
-    requestDataHandler: (pathName: PATH_NAMES, queryParams: {
+    requestDataHandler: (pathName: PATH_NAMES, queryParams?: {
         fromDate: any;
         toDate: any;
     }) => Promise<Response>
 ) {
     try {
-        const [responseReports, responseOrders, responseStocks] = await Promise.all([requestDataHandler(PATH_NAMES.REPORT_DETAILS, queryParams), requestDataHandler(PATH_NAMES.ORDERS, queryParams), requestDataHandler(PATH_NAMES.STOCKS, queryParams)])
+        const [responseReports, responseOrders, responseStocks] = await Promise.all([requestDataHandler(PATH_NAMES.REPORT_DETAILS, queryParams), requestDataHandler(PATH_NAMES.ORDERS, queryParams), requestDataHandler(PATH_NAMES.STOCKS)])
         const reportDetails = await responseReports.json() as ReportDetailsType[];
         const orders = await responseOrders.json() as OrdersType[];
         const stocks = await responseStocks.json() as StocksType[];
         if (!reportDetails || !orders || !stocks) return;
-        const mergeData = {} as TableStatRowsInfoByBarcodeMapType;
+        const mergeData = {} as Record<any, any>;
         reportDetails.forEach(item => {
             const barcode = item._id;
-            mergeData[barcode] = item;
+            const reducedItem = {} as Record<ReportDetailsKeysType, any>;
+
+            for (const [key, value] of Object.entries(item)) {
+                if (Array.isArray(value)) {
+                    const filteredValue = value.filter(el => +el && +el);
+                    reducedItem[key as ReportDetailsKeysType] = filteredValue.length ? (filteredValue.reduce((prevValue, currentValue) =>
+                        prevValue + currentValue, 0) / filteredValue.length).toFixed(2) : 0;
+                }
+                else reducedItem[key as ReportDetailsKeysType] = value;
+            }
+            mergeData[barcode] = reducedItem;
         });
         stocks.forEach(item => {
             const barcode = item._id;
             if (mergeData[barcode]) {
-                mergeData[barcode].daysOnSite = item.daysOnSite;
-                mergeData[barcode].quantityOnStock = item.quantityOnStock;
+                mergeData[barcode].quantityOnStock = item.quantityOnStock.reduce((prevValue, currentValue) =>
+                    prevValue + currentValue, 0);
             }
         });
         orders.forEach(item => {
@@ -65,7 +77,7 @@ async function onSetData(
             else
                 mergeData[barcode] = item;
         });
-        console.log(mergeData)
+
         setData(Object.values(mergeData));
     }
     catch (e) {

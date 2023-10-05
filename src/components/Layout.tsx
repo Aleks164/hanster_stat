@@ -6,9 +6,8 @@ import {
 } from "@ant-design/icons";
 import { Link, Outlet } from "react-router-dom";
 import type { MenuProps } from "antd";
-import { Menu } from "antd";
+import { Col, Menu, Row } from "antd";
 import hanster from "@/assets/hanster.jpg";
-import DataUpdate from "./DataUpdate";
 
 const items: MenuProps["items"] = [
   {
@@ -77,13 +76,29 @@ const Layout: React.FC = () => {
 
   return (
     <>
-      <img src={hanster} alt="hanster" />
-      <Menu
-        onClick={onClick}
-        selectedKeys={[current]}
-        mode="horizontal"
-        items={items}
-      />
+      <Row>
+        <Col flex={4}>
+          <Menu
+            onClick={onClick}
+            selectedKeys={[current]}
+            mode="horizontal"
+            items={items}
+          />
+        </Col>
+        <Col
+          flex={1}
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            backgroundColor: "white",
+            padding: "1px 1px",
+            margin: "0px 0px",
+            height: "46px",
+          }}
+        >
+          <img src={hanster} alt="hanster" />
+        </Col>
+      </Row>
       <Outlet />
     </>
   );

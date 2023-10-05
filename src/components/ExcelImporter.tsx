@@ -35,8 +35,9 @@ const ExcelImporter = ({
 
   return (
     <Button
+      style={{ position: "absolute", right: 5 }}
       onClick={exportHandler}
-      //   title="Экспорт в Excel"
+      title="Экспорт в Excel"
       icon={<Icon component={HeartIcon} />}
     />
   );

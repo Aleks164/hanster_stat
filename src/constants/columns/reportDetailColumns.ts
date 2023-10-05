@@ -40,40 +40,37 @@ export const reportDetailColumns = [
         title: "Цена розничная",
         dataIndex: "retail_price",
         key: "retail_price",
-        render: (value, record) => {
-            console.log(value, record)
-            return value && value.join(", ")
-        },
+        sorter: (a, b) => a.ordersCount - b.ordersCount,
     },
     {
         title: "Согласованная скидка",
         dataIndex: "sale_percent",
         key: "sale_percent",
-        render: (value) => value && value.join(", "),
+        sorter: (a, b) => a.ordersCount - b.ordersCount,
     },
     {
         title: "Цена розничная с учетом согласованной скидки",
         dataIndex: "retail_price_withdisc_rub",
         key: "retail_price_withdisc_rub",
-        render: (value) => value && value.join(", "),
+        sorter: (a, b) => a.ordersCount - b.ordersCount,
     },
     {
         title: "Стоимость логистики",
         dataIndex: "delivery_rub",
         key: "delivery_rub",
-        render: (value) => value && value.join(", "),
+        sorter: (a, b) => a.ordersCount - b.ordersCount,
     },
     {
         title: "К перечислению продавцу за реализованный товар",
         dataIndex: "ppvz_for_pay",
         key: "ppvz_for_pay",
-        render: (value) => value && value && value.join(", "),
+        sorter: (a, b) => a.ordersCount - b.ordersCount,
     },
     {
         title: "Кол-во продаж",
         dataIndex: "quantity",
         key: "quantity",
-        render: (value) => value && value.join(", "),
+        sorter: (a, b) => a.ordersCount - b.ordersCount,
     },
     {
         title: "Кол-во заказов",
@@ -83,16 +80,9 @@ export const reportDetailColumns = [
         sorter: (a, b) => a.ordersCount - b.ordersCount,
     },
     {
-        title: "Дней на сайте",
-        dataIndex: "daysOnSite",
-        key: "daysOnSite",
-        render: (value) => value || 0,
-        sorter: (a, b) => a.daysOnSite - b.daysOnSite,
-    },
-    {
         title: "Кол-во на складе",
         dataIndex: "quantityOnStock",
         key: "quantityOnStock",
-        render: (value) => value && value.join(", ")
+        sorter: (a, b) => a.ordersCount - b.ordersCount,
     }
 ] as ColumnType<Required<any>>[];

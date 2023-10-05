@@ -8,7 +8,6 @@ function Router() {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<TabTables />} />
-        {/* <Route path="diagrams" element={<DiagramPage />} /> */}
         <Route path="*" element={<TabTables />} />
       </Route>
     </Routes>
