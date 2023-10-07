@@ -1,7 +1,15 @@
+import React from "react";
 import { ColumnType } from "antd/es/table";
 
 
 export type ReportColumnType = typeof reportDetailColumns;
+
+function getImgRef(id:number){
+    const idAsString = String(id);
+    const vol = idAsString.substring(0, 3);
+    const part = idAsString.substring( 3);
+    return `https://basket-03.wb.ru/vol${vol}/part${part}/${idAsString}/images/c516x688/1.webp`
+}
 
 export const reportDetailColumns = [
     {
@@ -11,6 +19,12 @@ export const reportDetailColumns = [
         sorter: (a, b) => {
             return ("" + a._id).localeCompare(b._id);
         },
+    },
+    {
+        title: "Фото товара",
+        dataIndex: "nm_id",
+        key: "nm_id",
+        render:(value:number)=> <div><img ref={getImgRef(value)} alt="img"/></div> 
     },
     {
         title: "Предмет",
