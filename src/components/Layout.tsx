@@ -1,76 +1,30 @@
 import React, { useState } from "react";
-import {
-  AppstoreOutlined,
-  MailOutlined,
-  SettingOutlined,
-} from "@ant-design/icons";
-import { Link, Outlet } from "react-router-dom";
+import { AppstoreOutlined, MailOutlined } from "@ant-design/icons";
+import { Link, NavLink, Navigate, Outlet } from "react-router-dom";
 import type { MenuProps } from "antd";
 import { Col, Menu, Row } from "antd";
 import hanster from "@/assets/hanster.jpg";
+import styles from "./styles.module.css";
 
 const items: MenuProps["items"] = [
   {
     label: <Link to="/">Статистика</Link>,
-    key: "mail",
+    key: "statistics",
     icon: <MailOutlined />,
   },
   {
     label: <Link to="diagrams/">Графики</Link>,
-    key: "app",
+    key: "diagrams",
     icon: <AppstoreOutlined />,
-    // disabled: true,
-  },
-  {
-    label: "Navigation Three - Submenu",
-    key: "SubMenu",
-    icon: <SettingOutlined />,
-    children: [
-      {
-        type: "group",
-        label: "Item 1",
-        children: [
-          {
-            label: "Option 1",
-            key: "setting:1",
-          },
-          {
-            label: "Option 2",
-            key: "setting:2",
-          },
-        ],
-      },
-      {
-        type: "group",
-        label: "Item 2",
-        children: [
-          {
-            label: "Option 3",
-            key: "setting:3",
-          },
-          {
-            label: "Option 4",
-            key: "setting:4",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    label: (
-      <a href="https://ant.design" target="_blank" rel="noopener noreferrer">
-        Navigation Four - Link
-      </a>
-    ),
-    key: "alipay",
+    disabled: true,
+    title: "В разработке",
   },
 ];
 
 const Layout: React.FC = () => {
-  const [current, setCurrent] = useState("mail");
+  const [current, setCurrent] = useState("statistics");
 
   const onClick: MenuProps["onClick"] = (e) => {
-    console.log("click ", e);
     setCurrent(e.key);
   };
 
@@ -85,18 +39,13 @@ const Layout: React.FC = () => {
             items={items}
           />
         </Col>
-        <Col
-          flex={1}
-          style={{
-            display: "flex",
-            justifyContent: "flex-end",
-            backgroundColor: "white",
-            padding: "1px 1px",
-            margin: "0px 0px",
-            height: "46px",
-          }}
-        >
-          <img src={hanster} alt="hanster" />
+        <Col className={styles.logo_container} flex={1}>
+          <NavLink
+            to={"https://www.wildberries.ru/brands/hanster"}
+            target="_blank"
+          >
+            <img className={styles.logo} src={hanster} alt="hanster" />
+          </NavLink>
         </Col>
       </Row>
       <Outlet />

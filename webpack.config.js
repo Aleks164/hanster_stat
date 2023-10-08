@@ -3,6 +3,8 @@ const { resolve } = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const CssLoader = require.resolve('css-loader')
+const StyleLoader = require.resolve('style-loader');
 const Dotenv = require('dotenv-webpack');
 const webpack = require('webpack');
 
@@ -41,7 +43,31 @@ module.exports = {
       },
       {
         test: /\.css$/i,
-        use: isDev ? [MiniCssExtractPlugin.loader, "css-loader"] : [MiniCssExtractPlugin.loader, "css-loader", "postcss-loader"],
+        use: [StyleLoader,
+          {
+          loader: CssLoader,
+          options: {
+            importLoaders: 1,
+            modules: true, 
+          },          
+        },{
+            loader: require.resolve('postcss-loader'),
+            options: { 
+                postcssOptions: {plugins: () => [
+                    require('postcss-flexbugs-fixes'),
+                    autoprefixer({
+                        browsers: [
+                            '>1%',
+                            'last 4 versions',
+                            'Firefox ESR',
+                            'not ie < 9', // React doesn't support IE8 anyway
+                        ],
+                        flexbox: 'no-2009',
+                    }),
+                    require('postcss-modules-values'),
+                ],}
+            },
+        }, ],
       },
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,

@@ -1,0 +1,20 @@
+.goods_pictures {
+  width: 25px;
+  height: 25px;
+}
+
+.goods_pictures_container {
+  width: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  border: 1px double;
+  border-radius: 2px;
+}
+
+.goods_pictures_container:hover {
+  transform: scale(10) translate(0px, -10px);
+  z-index: 5;
+}

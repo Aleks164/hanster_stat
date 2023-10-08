@@ -12,6 +12,7 @@ declare module "*.svg" {
 }
 
 declare module '*.jpg';
+declare module '*.css';
 
 export type CalendarType = (typeof calendarTypes)[number];
 export type DatePikerParamsType = {

@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Table } from "antd";
+import { Empty, Row, Table } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { SalesItem } from "../../../commonTypes/api";
 import { ReportColumnType } from "@/constants/columns/reportDetailColumns";
@@ -7,9 +7,10 @@ import { ReportColumnType } from "@/constants/columns/reportDetailColumns";
 interface DataTableParamsType {
   itemsList: Record<string, any>[];
   columns: ReportColumnType;
+  loading: boolean;
 }
 
-function DataTable({ itemsList, columns }: DataTableParamsType) {
+function DataTable({ itemsList, columns, loading }: DataTableParamsType) {
   return (
     <>
       <Row>
@@ -21,6 +22,8 @@ function DataTable({ itemsList, columns }: DataTableParamsType) {
             return record._id!;
           }}
           columns={columns as ColumnsType<SalesItem>}
+          loading={loading}
+          locale={{ emptyText: <Empty /> }}
         />
       </Row>
     </>

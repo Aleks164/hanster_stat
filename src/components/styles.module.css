@@ -1,0 +1,18 @@
+.logo_container {
+  display: flex;
+  justify-content: flex-end;
+  background-color: white;
+  padding: 1px;
+  margin: 0px;
+  height: 46px;
+  cursor: pointer;
+}
+
+.logo {
+  height: 45px;
+  transition: scale 0.3s;
+}
+
+.logo:hover {
+  transform: scale(1.1);
+}

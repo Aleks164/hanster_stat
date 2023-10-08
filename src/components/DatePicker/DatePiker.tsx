@@ -8,7 +8,7 @@ import {
   DatePikerParamsType,
   DateTypeByCalendarType,
   CalendarType,
-} from "@/types";
+} from "@/globals";
 import { CaretUpOutlined, CaretDownOutlined } from "@ant-design/icons";
 dayjs.extend(weekday);
 

@@ -7,6 +7,7 @@ interface ReportDetailsType {
     retail_price_withdisc_rub: number[];
     delivery_rub: number[];
     ppvz_for_pay: number[];
+    quantity: number[]
     subject_name: string;
     sa_name: string;
     ts_name: string;
@@ -41,9 +42,11 @@ async function onSetData(
     requestDataHandler: (pathName: PATH_NAMES, queryParams?: {
         fromDate: any;
         toDate: any;
-    }) => Promise<Response>
+    }) => Promise<Response>,
+    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) {
     try {
+        setIsLoading(true);
         const [responseReports, responseOrders, responseStocks] = await Promise.all([requestDataHandler(PATH_NAMES.REPORT_DETAILS, queryParams), requestDataHandler(PATH_NAMES.ORDERS, queryParams), requestDataHandler(PATH_NAMES.STOCKS)])
         const reportDetails = await responseReports.json() as ReportDetailsType[];
         const orders = await responseOrders.json() as OrdersType[];
@@ -58,7 +61,7 @@ async function onSetData(
                 if (Array.isArray(value)) {
                     const filteredValue = value.filter(el => +el && +el);
                     reducedItem[key as ReportDetailsKeysType] = filteredValue.length ? (filteredValue.reduce((prevValue, currentValue) =>
-                        prevValue + currentValue, 0) / filteredValue.length).toFixed(2) : 0;
+                        prevValue + currentValue, 0) / getDivider(key, filteredValue.length)).toFixed(2) : 0;
                 }
                 else reducedItem[key as ReportDetailsKeysType] = value;
             }
@@ -79,9 +82,21 @@ async function onSetData(
         });
 
         setData(Object.values(mergeData));
+        setIsLoading(false);
     }
     catch (e) {
+        setIsLoading(false);
         console.log(e)
+    }
+}
+
+function getDivider(key: string, listLength: number) {
+    switch (key) {
+        case 'quantity':
+            {
+                return 1;
+            }
+        default: return listLength;
     }
 }
 

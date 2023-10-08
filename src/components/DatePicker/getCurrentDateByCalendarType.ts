@@ -1,5 +1,5 @@
 import { dateFormat } from "@/constants";
-import { CalendarType } from "@/types";
+import { CalendarType } from "@/globals";
 import dayjs from "dayjs";
 
 function getCurrentDateByCalendarType(currentCalendarType: CalendarType, date: dayjs.Dayjs | [dayjs.Dayjs, dayjs.Dayjs]) {

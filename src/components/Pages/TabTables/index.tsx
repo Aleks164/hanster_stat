@@ -10,10 +10,16 @@ import dayjs from "dayjs";
 
 function TabTables() {
   const [itemsList, setItemsList] = useState<TableStatRowInfoType[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const onSetDataHandler = useCallback(
     (fromDate: string, toDate: string) =>
-      onSetData({ fromDate, toDate }, setItemsList, getDataByDateRange),
+      onSetData(
+        { fromDate, toDate },
+        setItemsList,
+        getDataByDateRange,
+        setIsLoading
+      ),
     []
   );
   return (
@@ -26,7 +32,11 @@ function TabTables() {
         />
       </Row>
       <Row style={{ marginTop: 10 }} gutter={4}>
-        <DataTable itemsList={itemsList} columns={reportDetailColumns} />
+        <DataTable
+          itemsList={itemsList}
+          columns={reportDetailColumns}
+          loading={isLoading}
+        />
       </Row>
     </div>
   );
