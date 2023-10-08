@@ -4,11 +4,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const CssLoader = require.resolve('css-loader')
-const StyleLoader = require.resolve('style-loader');
-const Dotenv = require('dotenv-webpack');
-const webpack = require('webpack');
-
-const isDev = process.env.NODE_ENV === "development";
+const StyleLoader = require.resolve('style-loader');  
 
 module.exports = {
   mode: process.env.NODE_ENV === "production" ? "production" : "development",
@@ -85,11 +81,7 @@ module.exports = {
   optimization: {
     minimizer: ["...", new CssMinimizerPlugin()],
   },
-  plugins: [
-    new Dotenv(),
-    new webpack.DefinePlugin({
-      STATISTICS_API: JSON.stringify(process.env.STATISTICS_API)
-    }),
+  plugins: [ 
     new HtmlWebpackPlugin({
       template: "./src/index.html",
     }),
