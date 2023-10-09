@@ -1,4 +1,4 @@
-const HOST_NAME = 'https://5.188.116.205';
+const HOST_NAME = 'https://hansterstatserver.ru';
 export enum PATH_NAMES {
     SALES = 'sales', ORDERS = 'orders', STOCKS = 'stocks', REPORT_DETAILS = 'reports'
 }
