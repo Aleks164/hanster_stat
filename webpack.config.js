@@ -6,6 +6,9 @@ const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const CssLoader = require.resolve('css-loader')
 const StyleLoader = require.resolve('style-loader');  
 
+const isDev = process.env.NODE_ENV === "development";
+const PREFIX = "/hanster_stat/";
+
 module.exports = {
   mode: process.env.NODE_ENV === "production" ? "production" : "development",
   entry: resolve(__dirname, "./src/index"),
@@ -25,7 +28,7 @@ module.exports = {
   },
   output: {
     path: resolve(__dirname, "dist"),
-    publicPath: "/",
+    publicPath: isDev ? "/" : PREFIX,
     clean: true,
   },
   module: {
