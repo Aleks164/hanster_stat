@@ -1,6 +1,6 @@
 import getDataByDateRange from "@/requestDataHelpers/getDataByDateRange";
 import React, { useCallback, useState } from "react";
-import onSetData, { TableStatRowInfoType } from "../onSetData";
+import onSetData, { TableStatRowInfoType } from "./onSetData";
 import { Row } from "antd";
 import DataTable from "@/components/DataTable/Index";
 import DatePiker from "@/components/DatePicker/DatePiker";

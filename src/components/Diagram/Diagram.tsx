@@ -18,7 +18,7 @@ type DiagramStateTypeParams = {
 function Diagram({ salesByDate = [] }: DiagramStateTypeParams) {
   return (
     <>
-      <ResponsiveContainer width="100%" height="100%">
+      <ResponsiveContainer width="80%" height="100%">
         <LineChart
           // width={500}
           // height={300}
@@ -31,19 +31,17 @@ function Diagram({ salesByDate = [] }: DiagramStateTypeParams) {
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
+          {/* <XAxis dataKey="category" /> */}
           <YAxis />
           <Tooltip />
           <Legend />
           <Line
             type="monotone"
-            dataKey="sale"
-            name="Продажи"
+            dataKey="finishedPrice"
+            name="Цена"
             stroke="#8884d8"
             activeDot={{ r: 8 }}
           />
-          {/* <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
-          <Line type="monotone" dataKey="amt" stroke="#ff0042" /> */}
         </LineChart>
       </ResponsiveContainer>
     </>
@@ -51,24 +49,3 @@ function Diagram({ salesByDate = [] }: DiagramStateTypeParams) {
 }
 
 export default Diagram;
-
-// componentDidMount(): void {
-//   const quantityByDate: Record<string, number> = {};
-//   (data as unknown as SalesItem[]).forEach((item) => {
-//     const itemDate = new Date(item.date!);
-//     const month = itemDate.toLocaleString("default", { month: "long" });
-//     const date = itemDate.getDate();
-//     const keyTemplate = `${month} ${date}`;
-
-//     if (quantityByDate[keyTemplate]) quantityByDate[keyTemplate]++;
-//     else quantityByDate[keyTemplate] = 1;
-//     const salesByDate = [];
-//     for (const date in quantityByDate) {
-//       salesByDate.push({
-//         name: date,
-//         sale: quantityByDate[date],
-//       });
-//     }
-//     this.setState({ salesByDate });
-//   });
-// }

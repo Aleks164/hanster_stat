@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { AppstoreOutlined, MailOutlined } from "@ant-design/icons";
-import { Link, NavLink, Navigate, Outlet } from "react-router-dom";
+import { DatabaseOutlined, LineChartOutlined } from "@ant-design/icons";
+import { Link, NavLink, Outlet } from "react-router-dom";
 import type { MenuProps } from "antd";
 import { Col, Menu, Row } from "antd";
 import hanster from "@/assets/hanster.jpg";
@@ -10,13 +10,12 @@ const items: MenuProps["items"] = [
   {
     label: <Link to="/">Статистика</Link>,
     key: "statistics",
-    icon: <MailOutlined />,
+    icon: <DatabaseOutlined />,
   },
   {
     label: <Link to="diagrams/">Графики</Link>,
     key: "diagrams",
-    icon: <AppstoreOutlined />,
-    disabled: true,
+    icon: <LineChartOutlined />,
     title: "В разработке",
   },
 ];

@@ -3,10 +3,7 @@ import { Col, Row } from "antd";
 import Diagram from "./Diagram";
 import DatePiker from "../DatePicker/DatePiker";
 
-export type SalesCountByDateType = {
-  name: string;
-  sale: number;
-}[];
+export type SalesCountByDateType = Record<string, any>[];
 
 export type SetSalesCountByDateType = React.Dispatch<
   React.SetStateAction<SalesCountByDateType>
