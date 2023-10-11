@@ -6,13 +6,9 @@ import {
 import { ColumnType } from "antd/es/table";
 import { OrdersItem } from "../../../commonTypes/api";
 import dayjs from "dayjs";
-declare module "*.svg" {
-  const content: any;
-  export default content;
-}
+const content: any;
+export default content;
 
-declare module '*.jpg';
-declare module '*.css';
 
 export type CalendarType = (typeof calendarTypes)[number];
 export type DatePikerParamsType = {

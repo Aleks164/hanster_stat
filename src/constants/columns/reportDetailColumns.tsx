@@ -32,6 +32,7 @@ export const reportDetailColumns = [
     title: "Бар-код",
     dataIndex: "_id",
     key: "_id",
+    fixed: "left",
     sorter: (a, b) => {
       return ("" + a._id).localeCompare(b._id);
     },
@@ -40,6 +41,7 @@ export const reportDetailColumns = [
     title: "Фото товара",
     dataIndex: "nm_id",
     key: "nm_id",
+    fixed: "left",
     render: (value: number) => (
       <div className={styles.goods_pictures_container}>
         <img
@@ -54,6 +56,7 @@ export const reportDetailColumns = [
     title: "Предмет",
     dataIndex: "subject_name",
     key: "subject_name",
+    fixed: "left",
     sorter: (a, b) => {
       return ("" + a._id).localeCompare(b._id);
     },
@@ -108,6 +111,7 @@ export const reportDetailColumns = [
     title: "Кол-во продаж",
     dataIndex: "quantity",
     key: "quantity",
+    fixed: "right",
     render: (value) => value || 0,
     sorter: (a, b) => a.ordersCount - b.ordersCount,
   },
@@ -115,6 +119,7 @@ export const reportDetailColumns = [
     title: "Кол-во заказов",
     dataIndex: "ordersCount",
     key: "ordersCount",
+    fixed: "right",
     render: (value) => value || 0,
     sorter: (a, b) => a.ordersCount - b.ordersCount,
   },
@@ -122,6 +127,7 @@ export const reportDetailColumns = [
     title: "Кол-во на складе",
     dataIndex: "quantityOnStock",
     key: "quantityOnStock",
+    fixed: "right",
     render: (value) => value || 0,
     sorter: (a, b) => a.ordersCount - b.ordersCount,
   },

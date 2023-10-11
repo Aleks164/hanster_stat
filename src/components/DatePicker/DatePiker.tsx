@@ -54,9 +54,13 @@ function DatePiker({ onSetData = () => {} }: DatePikerParamsType) {
   );
 
   useEffect(() => {
-    const currentDate = dayjs();
+    const prevWeekMonday = new Date();
+    prevWeekMonday.setDate(
+      prevWeekMonday.getDate() - ((prevWeekMonday.getDay() + 6) % 7) - 7
+    );
+
     setCalendarType("week");
-    setDate(currentDate);
+    setDate(dayjs(prevWeekMonday));
   }, []);
 
   useEffect(() => {
@@ -66,6 +70,7 @@ function DatePiker({ onSetData = () => {} }: DatePikerParamsType) {
     onSetData(...onChangeArguments);
     setDate(currentDateByCalendarType);
   }, [currentCalendarType]);
+
   return (
     <Space direction="vertical" size="middle" style={{ display: "flex" }}>
       <Row>

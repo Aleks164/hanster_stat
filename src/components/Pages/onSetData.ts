@@ -77,8 +77,6 @@ async function onSetData(
         orders.forEach(item => {
             const barcode = item._id;
             if (mergeData[barcode]) mergeData[barcode].ordersCount = item.ordersCount;
-            else
-                mergeData[barcode] = item;
         });
 
         setData(Object.values(mergeData));

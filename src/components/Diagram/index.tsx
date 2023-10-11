@@ -15,7 +15,6 @@ export type SetSalesCountByDateType = React.Dispatch<
 function DiagramPage() {
   const [salesCountByDate, setSalesCountByDate] =
     useState<SalesCountByDateType>([]);
-  console.log(1);
 
   return (
     <Row
