@@ -1,8 +1,7 @@
 import React from "react";
 import { Empty, Row, Table } from "antd";
-import { ColumnsType } from "antd/es/table";
-import { SalesItem } from "../../../commonTypes/api";
 import { ReportColumnType } from "@/constants/columns/reportDetailColumns";
+import styles from "./styles.module.css";
 
 interface DataTableParamsType {
   itemsList: Record<string, any>[];
@@ -16,13 +15,14 @@ function DataTable({ itemsList, columns, loading }: DataTableParamsType) {
       <Row>
         <Table
           showSorterTooltip={false}
-          style={{ minWidth: "710px" }}
+          scroll={{ x: true }}
           dataSource={itemsList}
-          rowKey={(record) => {
-            return record._id!;
-          }}
-          columns={columns as ColumnsType<SalesItem>}
+          rowKey={(record) => record._id}
+          columns={columns}
           loading={loading}
+          rowClassName={(_, rowNumber) =>
+            rowNumber % 2 === 0 ? styles.odd_row : styles.even_row
+          }
           locale={{ emptyText: <Empty /> }}
         />
       </Row>

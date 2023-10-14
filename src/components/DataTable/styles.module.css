@@ -1,0 +1,7 @@
+.odd_row td {
+  background-color: #d3d3d3 !important;
+}
+
+.even_row td {
+  background-color: #ececec !important;
+}

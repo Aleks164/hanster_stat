@@ -1,8 +1,8 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Layout from "./Layout";
-import TabTables from "./Pages/TabTables";
-import Diagrams from "./Pages/Diagrams";
+import TabTables from "@/Pages/TabTables";
+import Diagrams from "@/Pages/Diagrams";
 
 function Router() {
   return (

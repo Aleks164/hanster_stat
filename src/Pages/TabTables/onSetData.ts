@@ -1,4 +1,5 @@
 import { PATH_NAMES } from "@/requestDataHelpers/getDataByDateRange";
+import { SetCalendarDateType } from "@/store/StatStoreContext";
 
 interface ReportDetailsType {
     _id: string;
@@ -43,10 +44,12 @@ async function onSetData(
         fromDate: any;
         toDate: any;
     }) => Promise<Response>,
-    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
+    setCalendarDate: SetCalendarDateType
 ) {
     try {
         setIsLoading(true);
+        setCalendarDate([queryParams.fromDate, queryParams.toDate])
         const [responseReports, responseOrders, responseStocks] = await Promise.all([requestDataHandler(PATH_NAMES.REPORT_DETAILS, queryParams), requestDataHandler(PATH_NAMES.ORDERS, queryParams), requestDataHandler(PATH_NAMES.STOCKS)])
         const reportDetails = await responseReports.json() as ReportDetailsType[];
         const orders = await responseOrders.json() as OrdersType[];

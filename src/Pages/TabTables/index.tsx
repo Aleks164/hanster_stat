@@ -1,16 +1,24 @@
 import getDataByDateRange from "@/requestDataHelpers/getDataByDateRange";
 import React, { useCallback, useState } from "react";
 import onSetData, { TableStatRowInfoType } from "./onSetData";
+import { reportDetailColumns } from "@/constants/columns/reportDetailColumns";
 import { Row } from "antd";
 import DataTable from "@/components/DataTable/Index";
 import DatePiker from "@/components/DatePicker/DatePiker";
-import { reportDetailColumns } from "@/constants/columns/reportDetailColumns";
 import ExcelImporter from "@/components/ExcelImporter";
+import { useStatStore } from "@/store/useStatStore";
 import dayjs from "dayjs";
+import CurrentDate from "./CurrentDate";
 
 function TabTables() {
   const [itemsList, setItemsList] = useState<TableStatRowInfoType[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const {
+    chosenProducts,
+    calendarDate: [firstDate, secondDate],
+    setChosenProducts,
+    setCalendarDate,
+  } = useStatStore();
 
   const onSetDataHandler = useCallback(
     (fromDate: string, toDate: string) =>
@@ -18,7 +26,8 @@ function TabTables() {
         { fromDate, toDate },
         setItemsList,
         getDataByDateRange,
-        setIsLoading
+        setIsLoading,
+        setCalendarDate
       ),
     []
   );
@@ -26,6 +35,7 @@ function TabTables() {
     <div style={{ marginTop: 10 }}>
       <Row>
         <DatePiker onSetData={onSetDataHandler} />
+        <CurrentDate firstDate={firstDate} secondDate={secondDate} />
         <ExcelImporter
           data={itemsList}
           fileName={dayjs(new Date()).format("YYYY-MM-DD")}

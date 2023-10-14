@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { DatabaseOutlined, LineChartOutlined } from "@ant-design/icons";
 import { Link, NavLink, Outlet } from "react-router-dom";
-import type { MenuProps } from "antd";
 import { Col, Menu, Row } from "antd";
+import type { MenuProps } from "antd";
 import hanster from "@/assets/hanster.jpg";
 import styles from "./styles.module.css";
 

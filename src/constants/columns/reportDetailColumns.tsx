@@ -33,21 +33,23 @@ export const reportDetailColumns = [
     dataIndex: "_id",
     key: "_id",
     fixed: "left",
+    width: 90,
     sorter: (a, b) => {
       return ("" + a._id).localeCompare(b._id);
     },
   },
   {
-    title: "Фото товара",
+    title: "Фото",
     dataIndex: "nm_id",
     key: "nm_id",
     fixed: "left",
-    render: (value: number) => (
+    width: 70,
+    render: (value: number, record) => (
       <div className={styles.goods_pictures_container}>
         <img
           className={styles.goods_pictures}
           src={getImgSrc(value)}
-          alt="img"
+          alt={record.subject_name}
         />
       </div>
     ),
@@ -56,7 +58,7 @@ export const reportDetailColumns = [
     title: "Предмет",
     dataIndex: "subject_name",
     key: "subject_name",
-    fixed: "left",
+    width: 90,
     sorter: (a, b) => {
       return ("" + a._id).localeCompare(b._id);
     },
@@ -65,6 +67,7 @@ export const reportDetailColumns = [
     title: "Артикул продавца",
     dataIndex: "sa_name",
     key: "sa_name",
+    width: 100,
     sorter: (a, b) => {
       return ("" + a._id).localeCompare(b._id);
     },
@@ -73,53 +76,59 @@ export const reportDetailColumns = [
     title: "Размер",
     dataIndex: "ts_name",
     key: "ts_name",
+    width: 80,
     sorter: (a, b) => {
       return ("" + a._id).localeCompare(b._id);
     },
   },
   {
-    title: "Цена розничная",
+    title: "Цена",
     dataIndex: "retail_price",
     key: "retail_price",
+    width: 82,
     sorter: (a, b) => a.ordersCount - b.ordersCount,
   },
   {
     title: "Согласованная скидка",
     dataIndex: "sale_percent",
     key: "sale_percent",
+    width: 125,
     sorter: (a, b) => a.ordersCount - b.ordersCount,
   },
   {
     title: "Цена розничная с учетом согласованной скидки",
     dataIndex: "retail_price_withdisc_rub",
     key: "retail_price_withdisc_rub",
+    width: 155,
     sorter: (a, b) => a.ordersCount - b.ordersCount,
   },
   {
     title: "Стоимость логистики",
     dataIndex: "delivery_rub",
     key: "delivery_rub",
+    width: 100,
     sorter: (a, b) => a.ordersCount - b.ordersCount,
   },
   {
     title: "К перечислению продавцу за реализованный товар",
     dataIndex: "ppvz_for_pay",
     key: "ppvz_for_pay",
+    width: 155,
     sorter: (a, b) => a.ordersCount - b.ordersCount,
   },
   {
     title: "Кол-во продаж",
     dataIndex: "quantity",
     key: "quantity",
-    fixed: "right",
-    render: (value) => value || 0,
+    width: 85,
+    render: (value) => ~~value || 0,
     sorter: (a, b) => a.ordersCount - b.ordersCount,
   },
   {
     title: "Кол-во заказов",
     dataIndex: "ordersCount",
     key: "ordersCount",
-    fixed: "right",
+    width: 85,
     render: (value) => value || 0,
     sorter: (a, b) => a.ordersCount - b.ordersCount,
   },
@@ -128,6 +137,7 @@ export const reportDetailColumns = [
     dataIndex: "quantityOnStock",
     key: "quantityOnStock",
     fixed: "right",
+    width: 85,
     render: (value) => value || 0,
     sorter: (a, b) => a.ordersCount - b.ordersCount,
   },
