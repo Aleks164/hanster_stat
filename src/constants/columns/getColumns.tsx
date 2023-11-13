@@ -1,39 +1,36 @@
 import React from "react";
 import { ColumnType } from "antd/es/table";
-import styles from "./styles.module.css";
+import {
+  ChosenProductsType,
+  SetChosenProductsType,
+} from "@/store/StatStoreContext";
+import ProductImage from "@/components/ProductImage";
+import AddRemoveItemToDiagramButton from "@/components/Buttons/AddRemoveItemToDiagramButton";
 
-export type ReportColumnType = typeof reportDetailColumns;
+export type GetReportColumnType = typeof getColumns;
+type GetReportColumnArgsType = {
+  chosenProducts: ChosenProductsType;
+  setChosenProducts: SetChosenProductsType;
+};
 
-function getHost(id: number) {
-  if (id >= 0 && id <= 143) return "//basket-01.wb.ru";
-  if (id >= 144 && id <= 287) return "//basket-02.wb.ru";
-  if (id >= 288 && id <= 431) return "//basket-03.wb.ru";
-  if (id >= 432 && id <= 719) return "//basket-04.wb.ru";
-  if (id >= 720 && id <= 1007) return "//basket-05.wb.ru";
-  if (id >= 1008 && id <= 1061) return "//basket-06.wb.ru";
-  if (id >= 1062 && id <= 1115) return "//basket-07.wb.ru";
-  if (id >= 1116 && id <= 1169) return "//basket-08.wb.ru";
-  if (id >= 1170 && id <= 1313) return "//basket-09.wb.ru";
-  if (id >= 1314 && id <= 1601) return "//basket-10.wb.ru";
-  if (id >= 1602 && id <= 1655) return "//basket-11.wb.ru";
-  return "//basket-12.wb.ru";
-}
-
-function getImgSrc(id: number) {
-  const vol = ~~(id / 1e5);
-  const part = ~~(id / 1e3);
-  return `https:${getHost(
-    vol
-  )}/vol${vol}/part${part}/${id}/images/c516x688/1.webp`;
-}
-
-export const reportDetailColumns = [
+export const getColumns = ({
+  setChosenProducts,
+  chosenProducts,
+}: GetReportColumnArgsType): ColumnType<Required<any>>[] => [
   {
     title: "Бар-код",
     dataIndex: "_id",
     key: "_id",
     fixed: "left",
     width: 90,
+    render: (value: string) => (
+      <AddRemoveItemToDiagramButton
+        key={value + "_toggle_button"}
+        value={value}
+        chosenProducts={chosenProducts}
+        setChosenProducts={setChosenProducts}
+      />
+    ),
     sorter: (a, b) => {
       return ("" + a._id).localeCompare(b._id);
     },
@@ -45,13 +42,7 @@ export const reportDetailColumns = [
     fixed: "left",
     width: 70,
     render: (value: number, record) => (
-      <div className={styles.goods_pictures_container}>
-        <img
-          className={styles.goods_pictures}
-          src={getImgSrc(value)}
-          alt={record.subject_name}
-        />
-      </div>
+      <ProductImage value={value} record={record} />
     ),
   },
   {
@@ -141,4 +132,4 @@ export const reportDetailColumns = [
     render: (value) => value || 0,
     sorter: (a, b) => a.ordersCount - b.ordersCount,
   },
-] as ColumnType<Required<any>>[];
+];

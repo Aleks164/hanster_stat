@@ -86,7 +86,6 @@ function DatePiker({ onSetData = () => {} }: DatePikerParamsType) {
                 label: datePickerDictionary[typeName],
               }))}
             />
-
             {currentCalendarType !== "range" && !Array.isArray(date) ? (
               <DatePicker
                 open={isOpen}

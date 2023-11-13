@@ -1,11 +1,11 @@
 import React from "react";
 import { Empty, Row, Table } from "antd";
-import { ReportColumnType } from "@/constants/columns/reportDetailColumns";
+import { ColumnType } from "antd/es/table";
 import styles from "./styles.module.css";
 
 interface DataTableParamsType {
   itemsList: Record<string, any>[];
-  columns: ReportColumnType;
+  columns: ColumnType<Required<any>>[];
   loading: boolean;
 }
 
@@ -20,9 +20,7 @@ function DataTable({ itemsList, columns, loading }: DataTableParamsType) {
           rowKey={(record) => record._id}
           columns={columns}
           loading={loading}
-          rowClassName={(_, rowNumber) =>
-            rowNumber % 2 === 0 ? styles.odd_row : styles.even_row
-          }
+          rowClassName={styles.table_row}
           locale={{ emptyText: <Empty /> }}
         />
       </Row>

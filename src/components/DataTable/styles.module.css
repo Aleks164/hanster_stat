@@ -1,7 +1,11 @@
-.odd_row td {
+.table_row td {
+  padding: 5px !important;
+}
+
+.table_row:nth-child(2n) td {
   background-color: #d3d3d3 !important;
 }
 
-.even_row td {
+.table_row:nth-child(2n-1) td {
   background-color: #ececec !important;
 }

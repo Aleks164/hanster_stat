@@ -1,9 +1,10 @@
-const HOST_NAME = 'https://hansterstatserver.ru';
+import { HOST_NAME } from "@/constants";
+
 export enum PATH_NAMES {
     SALES = 'sales', ORDERS = 'orders', STOCKS = 'stocks', REPORT_DETAILS = 'reports'
 }
 
-function getDataByDateRange(pathName: PATH_NAMES, queryParams?: { fromDate: any; toDate: any; }) {
+function getCategoriesByDateRange(pathName: PATH_NAMES, queryParams?: { fromDate: any; toDate: any; }) {
     if (!queryParams) return fetch(`${HOST_NAME}/${pathName}`, {
         method: "GET",
     });
@@ -13,5 +14,5 @@ function getDataByDateRange(pathName: PATH_NAMES, queryParams?: { fromDate: any;
     })
 }
 
-export default getDataByDateRange;
+export default getCategoriesByDateRange;
 

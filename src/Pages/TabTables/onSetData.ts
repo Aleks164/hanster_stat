@@ -1,4 +1,4 @@
-import { PATH_NAMES } from "@/requestDataHelpers/getDataByDateRange";
+import { PATH_NAMES } from "@/requestDataHelpers/getCategoriesByDateRange";
 import { SetCalendarDateType } from "@/store/StatStoreContext";
 
 interface ReportDetailsType {

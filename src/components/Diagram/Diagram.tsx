@@ -13,9 +13,10 @@ import { SalesCountByDateType } from ".";
 
 type DiagramStateTypeParams = {
   salesByDate: SalesCountByDateType;
+  diagramType: string;
 };
 
-function Diagram({ salesByDate = [] }: DiagramStateTypeParams) {
+function Diagram({ salesByDate = [], diagramType }: DiagramStateTypeParams) {
   return (
     <>
       <ResponsiveContainer width="80%" height="100%">
@@ -37,8 +38,8 @@ function Diagram({ salesByDate = [] }: DiagramStateTypeParams) {
           <Legend />
           <Line
             type="monotone"
-            dataKey="finishedPrice"
-            name="Цена"
+            dataKey={diagramType}
+            name={diagramType}
             stroke="#8884d8"
             activeDot={{ r: 8 }}
           />
