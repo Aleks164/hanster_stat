@@ -9,11 +9,9 @@ import ProductImage from "@/components/ProductImage";
 
 export type GetReportColumnArgsType = {
   chosenProducts: ChosenProductsType;
-  setChosenProducts: SetChosenProductsType;
 };
 
 export const getDiagramPageTableColumns = ({
-  setChosenProducts,
   chosenProducts,
 }: GetReportColumnArgsType): ColumnType<Required<any>>[] => [
   {
@@ -27,7 +25,6 @@ export const getDiagramPageTableColumns = ({
         key={value + "_toggle_button"}
         value={value}
         chosenProducts={chosenProducts}
-        setChosenProducts={setChosenProducts}
       />
     ),
     sorter: (a, b) => {

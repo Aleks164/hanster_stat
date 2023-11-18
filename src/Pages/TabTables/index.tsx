@@ -10,25 +10,27 @@ import { getColumns } from "@/constants/columns/getColumns";
 import { useStatStore } from "@/store/useStatStore";
 import { dateFormat } from "@/constants";
 import dayjs from "dayjs";
+import {
+  $chosenProducts,
+  $calendarDate,
+  setCalendarDate,
+  setChosenProducts,
+} from "@/store";
+import { useStore } from "effector-react";
 
 function TabTables() {
   const [itemsList, setItemsList] = useState<TableStatRowInfoType[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const {
-    chosenProducts,
-    calendarDate: [firstDate, secondDate],
-    setChosenProducts,
-    setCalendarDate,
-  } = useStatStore();
 
+  const chosenProducts = useStore($chosenProducts);
+  const [firstDate, secondDate] = useStore($calendarDate);
   const onSetDataHandler = useCallback(
     (fromDate: string, toDate: string) =>
       onSetData(
         { fromDate, toDate },
         setItemsList,
         getCategoriesByDateRange,
-        setIsLoading,
-        setCalendarDate
+        setIsLoading
       ),
     []
   );
@@ -45,7 +47,7 @@ function TabTables() {
       <Row style={{ marginTop: 10 }} gutter={4}>
         <DataTable
           itemsList={itemsList}
-          columns={getColumns({ setChosenProducts, chosenProducts })}
+          columns={getColumns({ chosenProducts })}
           loading={isLoading}
         />
       </Row>

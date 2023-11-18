@@ -1,9 +1,6 @@
+import React, { useCallback, useEffect, useState } from "react";
 import Diagram from "@/components/Diagram/Diagram";
 import { Col, DatePicker, Divider, Row, Select, Spin } from "antd";
-import dayjs from "dayjs";
-import React, { useCallback, useEffect, useState } from "react";
-import { demoData } from "./demoData";
-import { useStatStore } from "@/store/useStatStore";
 import {
   dateFormat,
   datePickerDictionary,
@@ -14,6 +11,9 @@ import DataTable from "@/components/DataTable/Index";
 import { getDiagramPageTableColumns } from "@/constants/columns/getDiagramPageTableColumns";
 import { getDateRangeByCalendarType } from "./getDateRangeByCalendarType";
 import setDiagramNewItemsList from "./setDiagramNewItemsList";
+import { $chosenProducts, $calendarDate, setChosenProducts } from "@/store";
+import { useStore } from "effector-react";
+import dayjs from "dayjs";
 
 export type DiagramPageCalendarType = Exclude<CalendarType, "range">;
 
@@ -26,11 +26,10 @@ function Diagrams() {
   const [currentDateFirstDate, setCurrentDateFirstDate] = useState<
     string | null
   >(null);
-  const {
-    chosenProducts,
-    calendarDate: [firstDate],
-    setChosenProducts,
-  } = useStatStore();
+
+  const chosenProducts = useStore($chosenProducts);
+  const [firstDate] = useStore($calendarDate);
+
   const toggleCalendarType = useCallback(
     (newType: DiagramPageCalendarType) => setCalendarType(newType),
     []
@@ -63,7 +62,7 @@ function Diagrams() {
   const handleDiagramTypeChange = (value: string) => {
     setDiagramType(value);
   };
-  console.log(itemsList);
+
   const optionsList = itemsList[0]
     ? Object.entries(itemsList[0])
         .filter(([_, value]) => typeof value === "number")
@@ -72,6 +71,7 @@ function Diagrams() {
           label: key,
         }))
     : [];
+
   return (
     <Row style={{ width: "90vw", height: "80vh" }}>
       <Col flex={1} style={{ padding: 20 }}>
@@ -100,7 +100,6 @@ function Diagrams() {
         <DataTable
           itemsList={itemsList}
           columns={getDiagramPageTableColumns({
-            setChosenProducts,
             chosenProducts,
           })}
           loading={isLoading}

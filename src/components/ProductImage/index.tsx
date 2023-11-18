@@ -1,5 +1,6 @@
 import React from "react";
 import getImgSrc from "@/constants/getImageSrc";
+import { TableStatRowInfoType } from "@/Pages/TabTables/onSetData";
 import styles from "./styles.module.css";
 
 function ProductImage({
@@ -7,14 +8,14 @@ function ProductImage({
   record,
 }: {
   value: number;
-  record: Record<string, string>;
+  record: TableStatRowInfoType;
 }) {
   return (
     <div className={styles.goods_pictures_container}>
       <img
         className={styles.goods_pictures}
         src={getImgSrc(value)}
-        alt={record.subject_name}
+        alt={record.subject}
       />
     </div>
   );

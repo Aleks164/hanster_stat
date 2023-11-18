@@ -1,44 +1,38 @@
 import React from "react";
 import { ColumnType } from "antd/es/table";
-import {
-  ChosenProductsType,
-  SetChosenProductsType,
-} from "@/store/StatStoreContext";
+import { ChosenProductsType } from "@/store/StatStoreContext";
 import ProductImage from "@/components/ProductImage";
-import AddRemoveItemToDiagramButton from "@/components/Buttons/AddRemoveItemToDiagramButton";
+import { TableStatRowInfoType } from "@/Pages/TabTables/onSetData";
 
 export type GetReportColumnType = typeof getColumns;
 type GetReportColumnArgsType = {
   chosenProducts: ChosenProductsType;
-  setChosenProducts: SetChosenProductsType;
 };
 
 export const getColumns = ({
-  setChosenProducts,
   chosenProducts,
-}: GetReportColumnArgsType): ColumnType<Required<any>>[] => [
+}: GetReportColumnArgsType): ColumnType<TableStatRowInfoType>[] => [
   {
     title: "Бар-код",
-    dataIndex: "_id",
-    key: "_id",
+    dataIndex: "barcode",
+    key: "barcode",
     fixed: "left",
     width: 90,
-    render: (value: string) => (
-      <AddRemoveItemToDiagramButton
-        key={value + "_toggle_button"}
-        value={value}
-        chosenProducts={chosenProducts}
-        setChosenProducts={setChosenProducts}
-      />
-    ),
+    // render: (value: string) => (
+    //   <AddRemoveItemToDiagramButton
+    //     key={value + "_toggle_button"}
+    //     value={value}
+    //     chosenProducts={chosenProducts}
+    //   />
+    // ),
     sorter: (a, b) => {
-      return ("" + a._id).localeCompare(b._id);
+      return ("" + a.barcode).localeCompare(b.barcode);
     },
   },
   {
     title: "Фото",
-    dataIndex: "nm_id",
-    key: "nm_id",
+    dataIndex: "nmId",
+    key: "nmId",
     fixed: "left",
     width: 70,
     render: (value: number, record) => (
@@ -47,89 +41,87 @@ export const getColumns = ({
   },
   {
     title: "Предмет",
-    dataIndex: "subject_name",
-    key: "subject_name",
+    dataIndex: "subject",
+    key: "subject",
     width: 90,
     sorter: (a, b) => {
-      return ("" + a._id).localeCompare(b._id);
+      return ("" + a.subject).localeCompare(b.subject);
     },
   },
   {
     title: "Артикул продавца",
-    dataIndex: "sa_name",
-    key: "sa_name",
+    dataIndex: "supplierArticle",
+    key: "supplierArticle",
     width: 100,
     sorter: (a, b) => {
-      return ("" + a._id).localeCompare(b._id);
+      return ("" + a.supplierArticle).localeCompare(b.supplierArticle);
     },
   },
   {
     title: "Размер",
-    dataIndex: "ts_name",
-    key: "ts_name",
+    dataIndex: "techSize",
+    key: "techSize",
     width: 80,
     sorter: (a, b) => {
-      return ("" + a._id).localeCompare(b._id);
+      return ("" + a.techSize).localeCompare(b.techSize);
     },
   },
   {
-    title: "Цена",
-    dataIndex: "retail_price",
-    key: "retail_price",
-    width: 82,
-    sorter: (a, b) => a.ordersCount - b.ordersCount,
-  },
-  {
-    title: "Согласованная скидка",
-    dataIndex: "sale_percent",
-    key: "sale_percent",
-    width: 125,
-    sorter: (a, b) => a.ordersCount - b.ordersCount,
-  },
-  {
-    title: "Цена розничная с учетом согласованной скидки",
-    dataIndex: "retail_price_withdisc_rub",
-    key: "retail_price_withdisc_rub",
-    width: 155,
-    sorter: (a, b) => a.ordersCount - b.ordersCount,
-  },
-  {
-    title: "Стоимость логистики",
-    dataIndex: "delivery_rub",
-    key: "delivery_rub",
-    width: 100,
-    sorter: (a, b) => a.ordersCount - b.ordersCount,
-  },
-  {
-    title: "К перечислению продавцу за реализованный товар",
-    dataIndex: "ppvz_for_pay",
-    key: "ppvz_for_pay",
-    width: 155,
-    sorter: (a, b) => a.ordersCount - b.ordersCount,
-  },
-  {
-    title: "Кол-во продаж",
-    dataIndex: "quantity",
-    key: "quantity",
-    width: 85,
-    render: (value) => ~~value || 0,
-    sorter: (a, b) => a.ordersCount - b.ordersCount,
-  },
-  {
-    title: "Кол-во заказов",
-    dataIndex: "ordersCount",
-    key: "ordersCount",
-    width: 85,
-    render: (value) => value || 0,
-    sorter: (a, b) => a.ordersCount - b.ordersCount,
+    title: "Склад",
+    dataIndex: "warehouseName",
+    key: "warehouseName",
+    width: 80,
+    sorter: (a, b) => {
+      return ("" + a.warehouseName).localeCompare(b.warehouseName);
+    },
   },
   {
     title: "Кол-во на складе",
-    dataIndex: "quantityOnStock",
-    key: "quantityOnStock",
-    fixed: "right",
+    dataIndex: "quantity",
+    key: "quantity",
     width: 85,
     render: (value) => value || 0,
-    sorter: (a, b) => a.ordersCount - b.ordersCount,
+    sorter: (a, b) => a.quantity! - b.quantity!,
+  },
+  {
+    title: "Возвращаются от клиента на склад",
+    dataIndex: "inWayFromClient",
+    key: "inWayFromClient",
+    width: 80,
+    render: (value) => value || 0,
+    sorter: (a, b) => a.inWayFromClient - b.inWayFromClient,
+  },
+  {
+    title: "Фактическая цена с учетом всех скидок",
+    dataIndex: "finishedPrice",
+    key: "finishedPrice",
+    width: 155,
+    render: (value) => (value && (+value).toFixed()) || 0,
+    sorter: (a, b) => a.finishedPrice - b.finishedPrice,
+  },
+  {
+    title: "Кол-во заказов",
+    dataIndex: "orderQuantity",
+    key: "orderQuantity",
+    width: 85,
+    render: (value) => value || 0,
+    sorter: (a, b) => a.orderQuantity - b.orderQuantity,
+  },
+  {
+    title: "Возвратов",
+    dataIndex: "isCancel",
+    key: "isCancel",
+    width: 85,
+    render: (value) => value || 0,
+    sorter: (a, b) => +a.isCancel - +b.isCancel,
+  },
+  {
+    title: "Кол-во продаж",
+    dataIndex: "saleQuantity",
+    key: "saleQuantity",
+    width: 85,
+    fixed: "right",
+    render: (value) => console.log(value) || value || 0,
+    sorter: (a, b) => a.saleQuantity - b.saleQuantity,
   },
 ];

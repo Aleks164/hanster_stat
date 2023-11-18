@@ -3,6 +3,7 @@ import { Tooltip, Button } from "antd";
 import { MinusCircleOutlined, PlusCircleOutlined } from "@ant-design/icons";
 import styles from "./styles.module.css";
 import { GetReportColumnArgsType } from "@/constants/columns/getDiagramPageTableColumns";
+import { setChosenProducts } from "@/store";
 
 interface AddRemoveItemToDiagramButtonParamsType
   extends GetReportColumnArgsType {
@@ -11,7 +12,6 @@ interface AddRemoveItemToDiagramButtonParamsType
 
 function AddRemoveItemToDiagramButton({
   chosenProducts,
-  setChosenProducts,
   value,
 }: AddRemoveItemToDiagramButtonParamsType) {
   const isProductChosen = chosenProducts.includes(value);

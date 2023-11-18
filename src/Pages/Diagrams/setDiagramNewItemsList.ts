@@ -16,9 +16,6 @@ async function setDiagramNewItemsList({
   setItemsList,
 }: SetDiagramNewItemsListArgsType) {
   try {
-    console.log(startOfRange,
-      endOfRange,
-      chosenProducts,)
     setIsLoading(true);
     const newItemsList = await getItemsListByDateRange(
       startOfRange,

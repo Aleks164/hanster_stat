@@ -1,5 +1,5 @@
 import { PATH_NAMES } from "@/requestDataHelpers/getCategoriesByDateRange";
-import { SetCalendarDateType } from "@/store/StatStoreContext";
+import { setCalendarDate } from "@/store";
 
 interface ReportDetailsType {
     _id: string;
@@ -14,26 +14,43 @@ interface ReportDetailsType {
     ts_name: string;
 }
 
-type ReportDetailsKeysType = keyof ReportDetailsType;
+interface SalesType {
+    _id: string,
+    "warehouseName": string,
+    "barcode": string,
+    "subject": string,
+    "techSize": string,
+    "supplierArticle": string
+    "nmId": number,
+    "finishedPrice": number,
+    "saleQuantity"?: number
+}
 
 interface StocksType {
     _id: string;
-    quantityOnStock: number[];
-    retail_price: number[];
-    sale_percent: number[];
-    daysOnSite: number[]
-    subject_name: string;
-    sa_name: string;
-    ts_name: string;
+    "techSize": string,
+    "barcode": string,
+    "warehouseName": string,
+    "subject": string,
+    "supplierArticle": string,
+    "nmId": number,
+    "inWayFromClient": number,
+    "quantity": number
 }
 
 interface OrdersType {
-    _id: string;
-    ordersCount: number;
+    _id: string,
+    "barcode": string,
+    "warehouseName": string,
+    "nmId": number,
+    "subject": string,
+    "techSize": string,
+    "supplierArticle": string,
+    "isCancel": boolean | number,
+    "orderQuantity"?: number
 }
 
-export type TableStatRowInfoType = Partial<ReportDetailsType & StocksType & OrdersType>;
-export type TableStatRowsInfoByBarcodeMapType = Record<string, TableStatRowInfoType>
+export type TableStatRowInfoType = SalesType | StocksType | OrdersType;
 
 async function onSetData(
     queryParams: {
@@ -44,43 +61,106 @@ async function onSetData(
         fromDate: any;
         toDate: any;
     }) => Promise<Response>,
-    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
-    setCalendarDate: SetCalendarDateType
+    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) {
     try {
         setIsLoading(true);
         setCalendarDate([queryParams.fromDate, queryParams.toDate])
-        const [responseReports, responseOrders, responseStocks] = await Promise.all([requestDataHandler(PATH_NAMES.REPORT_DETAILS, queryParams), requestDataHandler(PATH_NAMES.ORDERS, queryParams), requestDataHandler(PATH_NAMES.STOCKS)])
-        const reportDetails = await responseReports.json() as ReportDetailsType[];
+        const [responseReports, responseOrders, responseStocks] = await Promise.all([requestDataHandler(PATH_NAMES.SALES, queryParams), requestDataHandler(PATH_NAMES.ORDERS, queryParams), requestDataHandler(PATH_NAMES.STOCKS)])
+        const sales = await responseReports.json() as SalesType[];
         const orders = await responseOrders.json() as OrdersType[];
         const stocks = await responseStocks.json() as StocksType[];
-        if (!reportDetails || !orders || !stocks) return;
-        const mergeData = {} as Record<any, any>;
-        reportDetails.forEach(item => {
-            const barcode = item._id;
-            const reducedItem = {} as Record<ReportDetailsKeysType, any>;
+        if (!sales || !orders || !stocks) return;
+        const mergeData = {} as Record<string, TableStatRowInfoType>;
+        let dataByWarehouse = {} as Record<SalesType["barcode"], any[]>;
+        sales.forEach(sale => {
+            sale.saleQuantity = 1;
+            sale.quantity = 0;
+            sale.orderQuantity = 0;
+            sale.inWayFromClient = 0;
+            sale.isCancel = 0;
+            if (dataByWarehouse[sale.warehouseName])
+                dataByWarehouse[sale.warehouseName].push(sale)
+            else dataByWarehouse[sale.warehouseName] = [sale];
+        });
+        Object.values(dataByWarehouse)
+            .map(salesByWarehouse => {
+                const warehouseSalesMap = {} as Record<SalesType["barcode"], SalesType>;
+                salesByWarehouse.forEach(saleByWarehouse => {
+                    if (warehouseSalesMap[saleByWarehouse.barcode]) warehouseSalesMap[saleByWarehouse.barcode].saleQuantity! += 1;
+                    else warehouseSalesMap[saleByWarehouse.barcode] = saleByWarehouse;
+                });
+                return Object.values(warehouseSalesMap);
+            })
+            .flat()
+            .forEach(saleItem => {
+                mergeData[saleItem.barcode + saleItem.warehouseName] = saleItem;
+            });
+        dataByWarehouse = {};
 
-            for (const [key, value] of Object.entries(item)) {
-                if (Array.isArray(value)) {
-                    const filteredValue = value.filter(el => +el && +el);
-                    reducedItem[key as ReportDetailsKeysType] = filteredValue.length ? (filteredValue.reduce((prevValue, currentValue) =>
-                        prevValue + currentValue, 0) / getDivider(key, filteredValue.length)).toFixed(2) : 0;
+        stocks.forEach(stock => {
+            if (dataByWarehouse[stock.warehouseName])
+                dataByWarehouse[stock.warehouseName].push(stock)
+            else dataByWarehouse[stock.warehouseName] = [stock];
+        });
+        Object.values(dataByWarehouse).map(stocksByWarehouse => {
+            const warehouseStockMap = {} as Record<SalesType["barcode"], StocksType>;
+            stocksByWarehouse.forEach(stockByWarehouse => {
+                if (warehouseStockMap[stockByWarehouse.barcode]) {
+                    warehouseStockMap[stockByWarehouse.barcode].quantity += stockByWarehouse.quantity;
+                    warehouseStockMap[stockByWarehouse.barcode].inWayFromClient += stockByWarehouse.inWayFromClient;
                 }
-                else reducedItem[key as ReportDetailsKeysType] = value;
-            }
-            mergeData[barcode] = reducedItem;
+                else warehouseStockMap[stockByWarehouse.barcode] = stockByWarehouse;
+            });
+            return Object.values(warehouseStockMap);
+        })
+            .flat()
+            .forEach(stockItem => {
+                if (mergeData[stockItem.barcode + stockItem.warehouseName]) {
+                    (mergeData[stockItem.barcode + stockItem.warehouseName] as StocksType).quantity = stockItem.quantity;
+                    (mergeData[stockItem.barcode + stockItem.warehouseName] as StocksType).inWayFromClient = stockItem.inWayFromClient;
+                }
+                else mergeData[stockItem.barcode + stockItem.warehouseName] = stockItem;
+            });
+        dataByWarehouse = {};
+
+        orders.forEach(order => {
+            order.orderQuantity = 1;
+            if (dataByWarehouse[order.warehouseName])
+                dataByWarehouse[order.warehouseName].push(order)
+            else dataByWarehouse[order.warehouseName] = [order];
         });
-        stocks.forEach(item => {
-            const barcode = item._id;
-            if (mergeData[barcode]) {
-                mergeData[barcode].quantityOnStock = item.quantityOnStock.reduce((prevValue, currentValue) =>
-                    prevValue + currentValue, 0);
-            }
-        });
-        orders.forEach(item => {
-            const barcode = item._id;
-            if (mergeData[barcode]) mergeData[barcode].ordersCount = item.ordersCount;
-        });
+        Object.values(dataByWarehouse)
+            .map(ordersByWarehouse => {
+                const warehouseOrderMap = {} as Record<SalesType["barcode"], OrdersType>;
+                ordersByWarehouse.forEach(orderByWarehouse => {
+                    if (warehouseOrderMap[orderByWarehouse.barcode]) {
+                        warehouseOrderMap[orderByWarehouse.barcode].orderQuantity! += 1;
+                        (warehouseOrderMap[orderByWarehouse.barcode].isCancel as number) += 1;
+                    }
+                    else {
+                        orderByWarehouse.saleQuantity = 0;
+                        orderByWarehouse.quantity = 0;
+                        orderByWarehouse.inWayFromClient = 0;
+                        warehouseOrderMap[orderByWarehouse.barcode] = orderByWarehouse;
+
+                    }
+                });
+                return Object.values(warehouseOrderMap);
+            })
+            .flat()
+            .forEach(stockItem => {
+                if (mergeData[stockItem.barcode + stockItem.warehouseName]) {
+                    (mergeData[stockItem.barcode + stockItem.warehouseName] as OrdersType).orderQuantity = stockItem.orderQuantity;
+                    (mergeData[stockItem.barcode + stockItem.warehouseName] as OrdersType).isCancel = stockItem.isCancel;
+                }
+                else {
+                    stockItem.saleQuantity = 0;
+                    stockItem.quantity = 0;
+                    stockItem.inWayFromClient = 0;
+                    mergeData[stockItem.barcode + stockItem.warehouseName] = stockItem;
+                }
+            });
 
         setData(Object.values(mergeData));
         setIsLoading(false);
@@ -88,16 +168,6 @@ async function onSetData(
     catch (e) {
         setIsLoading(false);
         console.log(e)
-    }
-}
-
-function getDivider(key: string, listLength: number) {
-    switch (key) {
-        case 'quantity':
-            {
-                return 1;
-            }
-        default: return listLength;
     }
 }
 
