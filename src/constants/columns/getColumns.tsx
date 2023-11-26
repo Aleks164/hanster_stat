@@ -7,10 +7,18 @@ import { TableStatRowInfoType } from "@/Pages/TabTables/onSetData";
 export type GetReportColumnType = typeof getColumns;
 type GetReportColumnArgsType = {
   chosenProducts: ChosenProductsType;
+  rating: Record<
+    string,
+    {
+      feedbacksCount: number;
+      valuation: string;
+    }
+  >;
 };
 
 export const getColumns = ({
   chosenProducts,
+  rating,
 }: GetReportColumnArgsType): ColumnType<TableStatRowInfoType>[] => [
   {
     title: "Бар-код",
@@ -18,13 +26,6 @@ export const getColumns = ({
     key: "barcode",
     fixed: "left",
     width: 90,
-    // render: (value: string) => (
-    //   <AddRemoveItemToDiagramButton
-    //     key={value + "_toggle_button"}
-    //     value={value}
-    //     chosenProducts={chosenProducts}
-    //   />
-    // ),
     sorter: (a, b) => {
       return ("" + a.barcode).localeCompare(b.barcode);
     },
@@ -34,9 +35,13 @@ export const getColumns = ({
     dataIndex: "nmId",
     key: "nmId",
     fixed: "left",
-    width: 70,
+    width: 140,
     render: (value: number, record) => (
-      <ProductImage value={value} record={record} />
+      <ProductImage
+        value={value}
+        record={record}
+        rating={rating[record.nmId]}
+      />
     ),
   },
   {
@@ -52,10 +57,24 @@ export const getColumns = ({
     title: "Артикул продавца",
     dataIndex: "supplierArticle",
     key: "supplierArticle",
-    width: 100,
+    width: 125,
     sorter: (a, b) => {
       return ("" + a.supplierArticle).localeCompare(b.supplierArticle);
     },
+  },
+  {
+    title: "Артикул WB",
+    dataIndex: "nmId",
+    key: "nmId",
+    width: 100,
+    render: (value: number, record) => {
+      return (
+        <div className="nmId_item" style={{ textAlign: "center" }}>
+          {value}
+        </div>
+      );
+    },
+    sorter: (a, b) => a.nmId - b.nmId,
   },
   {
     title: "Размер",
@@ -95,7 +114,7 @@ export const getColumns = ({
     title: "Фактическая цена с учетом всех скидок",
     dataIndex: "finishedPrice",
     key: "finishedPrice",
-    width: 155,
+    width: 85,
     render: (value) => (value && (+value).toFixed()) || 0,
     sorter: (a, b) => a.finishedPrice - b.finishedPrice,
   },
@@ -111,7 +130,7 @@ export const getColumns = ({
     title: "Возвратов",
     dataIndex: "isCancel",
     key: "isCancel",
-    width: 85,
+    width: 60,
     render: (value) => value || 0,
     sorter: (a, b) => +a.isCancel - +b.isCancel,
   },
@@ -121,7 +140,7 @@ export const getColumns = ({
     key: "saleQuantity",
     width: 85,
     fixed: "right",
-    render: (value) => console.log(value) || value || 0,
+    render: (value) => value || 0,
     sorter: (a, b) => a.saleQuantity - b.saleQuantity,
   },
 ];

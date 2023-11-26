@@ -1,5 +1,10 @@
+.table_row {
+  height: 55px !important;
+}
+
 .table_row td {
   padding: 5px !important;
+  text-align: center;
 }
 
 .table_row:nth-child(2n) td {
